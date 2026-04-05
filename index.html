@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Révolution IA — Pierre Matuchet</title>
+
+<!-- Google Analytics 4 — remplace G-XXXXXXXXXX par ton Measurement ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer=window.dataLayer||[];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());
+  gtag('config','G-XXXXXXXXXX');
+
+  // Track click on "Commander sur Amazon"
+  function trackAmazon(){
+    gtag('event','click_commander_amazon',{event_category:'conversion',event_label:'hero_cta_amazon'});
+  }
+</script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Anton&display=swap');
+
+  :root {
+    --black: #000;
+    --white: #fff;
+    --g50: #fafafa;
+    --g100: #f0f0f0;
+    --g200: #e5e5e5;
+    --g300: #d4d4d4;
+    --g400: #a3a3a3;
+    --g500: #737373;
+    --g600: #525252;
+    --g700: #404040;
+    --g800: #262626;
+    --g900: #171717;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: var(--white); color: var(--black); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  ::selection { background: var(--black); color: var(--white); }
+
+  /* ===== HERO ===== */
+  .hero { background: var(--black); color: var(--white); }
+  .hero-inner { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; min-height: 200px; }
+  .hero-text { flex: 1; padding: 24px 32px 24px 48px; }
+  .hero-label { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: var(--g400); margin-bottom: 8px; font-weight: 600; }
+  .hero-title { font-family: 'Anton', sans-serif; font-size: clamp(38px, 5vw, 64px); font-weight: 400; line-height: 1; margin-bottom: 8px; letter-spacing: 2px; text-transform: uppercase; }
+  .hero-sub { font-size: 12px; color: var(--g400); max-width: 460px; line-height: 1.5; margin-bottom: 14px; font-weight: 300; }
+  .hero-cta { display: inline-flex; align-items: center; gap: 8px; padding: 9px 22px; background: var(--white); color: var(--black); text-decoration: none; font-weight: 600; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; transition: all 0.3s; }
+  .hero-cta:hover { background: var(--g200); transform: translateY(-1px); }
+  .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .hero-cta-li { background: transparent; border: 1px solid var(--g500); color: var(--white); display: inline-flex; align-items: center; gap: 6px; }
+  .hero-cta-li:hover { background: #0A66C2; border-color: #0A66C2; color: var(--white); }
+  .hero-cta-mail { background: transparent; border: 1px solid var(--g500); color: var(--white); }
+  .hero-cta-mail:hover { background: var(--white); color: var(--black); }
+  .hero-stats { display: flex; gap: 24px; margin-top: 14px; }
+  .hero-stat-n { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; }
+  .hero-stat-l { font-size: 9px; color: var(--g500); text-transform: uppercase; letter-spacing: 2px; margin-top: 1px; }
+  .hero-book { width: 260px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; padding: 18px 36px 18px 0; }
+  .hero-book img { width: 140px; box-shadow: 12px 12px 36px rgba(0,0,0,0.5); transition: transform 0.4s; }
+  .book-cover { width: 140px; min-height: 200px; background: var(--white); color: var(--black); padding: 20px 14px 14px; font-family: 'Inter', sans-serif; box-shadow: 12px 12px 36px rgba(0,0,0,0.5); transition: transform 0.4s; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; border: 1px solid var(--g200); }
+  .book-cover:hover { transform: rotate(-2deg) scale(1.03); }
+  .bc-title { font-family: 'Anton', 'Playfair Display', serif; font-size: 22px; font-weight: 400; line-height: 1.05; letter-spacing: 0.5px; text-transform: uppercase; }
+  .bc-ia { font-family: 'Anton', 'Playfair Display', serif; font-size: 46px; font-weight: 400; line-height: 0.85; letter-spacing: -1px; text-transform: uppercase; margin-top: 2px; }
+  .bc-subtitle { font-size: 7px; color: var(--g600); line-height: 1.4; margin-top: 10px; }
+  .bc-bottom { margin-top: auto; padding-top: 10px; }
+  .bc-preface { font-size: 6px; color: var(--g500); line-height: 1.3; }
+  .bc-author { font-size: 8px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-top: 6px; }
+  .bc-edition { font-size: 6px; color: var(--g500); margin-top: 2px; }
+
+  /* ===== TOPBAR ===== */
+  .topbar { display: flex; justify-content: flex-end; padding: 10px 36px; border-bottom: 1px solid var(--g200); background: var(--white); position: sticky; top: 0; z-index: 100; }
+  .lang-sw { display: flex; border: 1px solid var(--g300); }
+  .lang-b { padding: 5px 14px; border: none; background: var(--white); color: var(--g500); cursor: pointer; font-size: 11px; font-weight: 600; letter-spacing: 1px; transition: all 0.2s; }
+  .lang-b.on { background: var(--black); color: var(--white); }
+  .lang-b+.lang-b { border-left: 1px solid var(--g300); }
+
+  /* ===== 3 COLS ===== */
+  .cols { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; min-height: 80vh; }
+  .col { border-right: 1px solid var(--g200); display: flex; flex-direction: column; }
+  .col:last-child { border-right: none; }
+  .col-head { padding: 28px 28px 20px; border-bottom: 1px solid var(--g200); position: sticky; top: 49px; background: var(--white); z-index: 50; }
+  .col-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--g400); margin-bottom: 4px; font-weight: 600; }
+  .col-title { font-family: 'Anton', sans-serif; font-size: 20px; font-weight: 400; letter-spacing: 0.5px; text-transform: uppercase; }
+  .li-logo { width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-left: 4px; color: #0A66C2; }
+  .col-body { flex: 1; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--g300) transparent; }
+  .col-body::-webkit-scrollbar { width: 3px; }
+  .col-body::-webkit-scrollbar-thumb { background: var(--g300); }
+
+  /* ===== PROGRESS ===== */
+  .prog { padding: 16px 28px; border-bottom: 1px solid var(--g200); display: flex; align-items: center; gap: 14px; }
+  .prog-bar { flex: 1; height: 2px; background: var(--g200); }
+  .prog-fill { height: 100%; background: var(--black); transition: width 0.5s; width: 0%; }
+  .prog-lbl { font-size: 11px; font-weight: 600; color: var(--g500); white-space: nowrap; }
+
+  /* ===== BADGES ===== */
+  .badges { padding: 14px 28px; border-bottom: 1px solid var(--g200); display: flex; gap: 5px; flex-wrap: wrap; }
+  .bdg { width: 28px; height: 28px; border: 1px solid var(--g300); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; opacity: 0.2; transition: all 0.3s; background: var(--white); }
+  .bdg.on { opacity: 1; border-color: var(--black); background: var(--black); color: var(--white); }
+  .bdg-f { width: 32px; border-width: 2px; font-size: 11px; }
+
+  /* ===== CHAPTER ===== */
+  .ch { border-bottom: 1px solid var(--g100); cursor: pointer; transition: background 0.15s; }
+  .ch:hover { background: var(--g50); }
+  .ch-row { display: flex; align-items: center; padding: 16px 28px; gap: 14px; }
+  .ch-n { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; width: 28px; text-align: center; color: var(--g300); flex-shrink: 0; }
+  .ch.done .ch-n { color: var(--black); }
+  .ch-t { flex: 1; font-size: 13px; font-weight: 500; color: var(--g700); line-height: 1.3; }
+  .ch.done .ch-t { color: var(--black); font-weight: 600; }
+  .ch-s { font-size: 10px; color: var(--g400); font-weight: 500; white-space: nowrap; }
+  .ch-ck { width: 18px; height: 18px; border: 1.5px solid var(--g300); display: flex; align-items: center; justify-content: center; font-size: 10px; color: transparent; flex-shrink: 0; }
+  .ch.done .ch-ck { border-color: var(--black); background: var(--black); color: var(--white); }
+
+  /* ===== QUIZ ===== */
+  .qp { display: none; padding: 22px 28px 28px; border-bottom: 1px solid var(--g200); background: var(--g50); animation: si 0.2s; }
+  .qp.open { display: block; }
+  @keyframes si { from{opacity:0} to{opacity:1} }
+  .qc { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--g400); margin-bottom: 10px; font-weight: 700; }
+  .qt { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 400; line-height: 1.45; margin-bottom: 18px; font-style: italic; }
+  .qo { display: flex; flex-direction: column; gap: 7px; }
+  .qb { padding: 11px 14px; border: 1px solid var(--g300); background: var(--white); color: var(--g700); cursor: pointer; font-size: 13px; text-align: left; transition: all 0.15s; line-height: 1.4; font-family: 'Inter', sans-serif; }
+  .qb:hover:not(.lk) { border-color: var(--black); color: var(--black); }
+  .qb.ok { border-color: var(--black); background: var(--black); color: var(--white); }
+  .qb.ko { border-color: var(--g300); color: var(--g400); text-decoration: line-through; }
+  .qb.sr { border-color: var(--black); background: var(--g900); color: var(--white); }
+  .qb.lk { cursor: default; }
+  .qx { margin-top: 14px; padding: 14px; border-left: 3px solid var(--black); background: var(--white); font-size: 13px; color: var(--g600); line-height: 1.6; display: none; }
+  .qx.v { display: block; }
+  .qnx { margin-top: 14px; padding: 9px 24px; background: var(--black); color: var(--white); border: none; cursor: pointer; font-weight: 600; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; display: none; transition: all 0.2s; }
+  .qnx.v { display: inline-block; }
+  .qnx:hover { background: var(--g800); }
+
+  .sc { text-align: center; padding: 28px 16px; }
+  .sc-n { font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 700; }
+  .sc-l { font-size: 10px; color: var(--g400); margin-top: 4px; text-transform: uppercase; letter-spacing: 2px; }
+  .sc-m { font-size: 13px; color: var(--g600); margin-top: 10px; }
+  .sc-r { margin-top: 14px; padding: 7px 20px; background: transparent; border: 1px solid var(--black); color: var(--black); cursor: pointer; font-weight: 600; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; transition: all 0.2s; }
+  .sc-r:hover { background: var(--black); color: var(--white); }
+
+  .ft { padding: 22px 28px; text-align: center; }
+  .ft-btn { padding: 12px 36px; background: var(--black); color: var(--white); border: none; cursor: pointer; font-weight: 700; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; width: 100%; transition: all 0.3s; }
+  .ft-btn:disabled { background: var(--g300); cursor: not-allowed; }
+  .ft-btn:not(:disabled):hover { background: var(--g800); }
+  .ft-sub { font-size: 10px; color: var(--g400); margin-top: 6px; }
+
+  /* ===== CAROUSEL ===== */
+  .car { position: relative; overflow: hidden; flex: 1; }
+  .car-t { display: flex; flex-direction: column; animation: su var(--sp,60s) linear infinite; }
+  .car:hover .car-t { animation-play-state: paused; }
+  @keyframes su { 0%{transform:translateY(0)} 100%{transform:translateY(-50%)} }
+
+  /* ===== LINKEDIN ===== */
+  .li { padding: 24px 28px; border-bottom: 1px solid var(--g100); transition: background 0.15s; }
+  .li:hover { background: var(--g50); }
+  .li-h { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .li-av { width: 36px; height: 36px; background: var(--black); color: var(--white); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .li-a { font-size: 12px; font-weight: 600; }
+  .li-r { font-size: 10px; color: var(--g400); }
+  .li-b { font-size: 13.5px; line-height: 1.65; color: var(--g700); }
+  .li-b strong { color: var(--black); font-weight: 600; }
+  .li-f { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--g100); }
+  .li-e { font-size: 10px; color: var(--g400); }
+  .li-l { font-size: 10px; font-weight: 600; color: var(--black); text-decoration: none; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid var(--black); padding-bottom: 1px; }
+
+  /* ===== NEWS ===== */
+  .nw { padding: 22px 28px; border-bottom: 1px solid var(--g100); transition: background 0.15s; }
+  .nw:hover { background: var(--g50); }
+  .nw-m { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .nw-d { font-size: 10px; color: var(--g400); font-weight: 500; }
+  .nw-tg { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; background: var(--g100); padding: 2px 8px; }
+  .nw-t { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; line-height: 1.3; margin-bottom: 5px; }
+  .nw-t a { color: var(--black); text-decoration: none; }
+  .nw-t a:hover { text-decoration: underline; }
+  .nw-p { font-size: 12px; color: var(--g500); line-height: 1.5; }
+  .nw-s { font-size: 10px; color: var(--g400); margin-top: 6px; }
+  .nw-loading { padding: 40px 28px; text-align: center; font-size: 12px; color: var(--g400); }
+
+  /* ===== MODAL ===== */
+  .mod { display: none; position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; padding: 20px; }
+  .mod.on { display: flex; }
+  .mod-b { background: var(--white); max-width: 580px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 44px; }
+  .mod-x { float: right; background: none; border: none; font-size: 22px; cursor: pointer; color: var(--g400); }
+
+  footer { border-top: 1px solid var(--g200); padding: 20px 36px; display: flex; justify-content: space-between; font-size: 10px; color: var(--g400); }
+  footer a { color: var(--black); text-decoration: none; font-weight: 600; }
+
+  @media (max-width: 1024px) {
+    .cols { grid-template-columns: 1fr; }
+    .col { border-right: none; border-bottom: 1px solid var(--g200); }
+    .col-body { max-height: 550px; }
+    .car { max-height: 500px; }
+    .hero-inner { flex-direction: column-reverse; text-align: center; }
+    .hero-text { padding: 36px 28px; }
+    .hero-sub { margin: 0 auto 28px; }
+    .hero-book { padding: 36px 28px 0; width: auto; }
+    .hero-stats { justify-content: center; }
+  }
+  @media (max-width: 640px) {
+    .hero-text { padding: 28px 18px; }
+    .col-head { padding: 20px 18px 16px; }
+    .ch-row { padding: 12px 18px; }
+    .qp { padding: 18px; }
+    .li { padding: 18px; }
+    .nw { padding: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-label" data-fr="Nouveau livre" data-en="New book">Nouveau livre</div>
+      <h1 class="hero-title" data-fr="IA Révolution" data-en="AI Revolution">IA Révolution</h1>
+      <p class="hero-sub" data-fr="Préparer votre organisation à l'intelligence artificielle et ses agents. Une boussole, pas un GPS." data-en="Prepare your organization for AI and its agents. A compass, not a GPS.">Préparer votre organisation à l'intelligence artificielle et ses agents. Une boussole, pas un GPS.</p>
+      <div class="hero-actions">
+        <a class="hero-cta" href="https://amzn.eu/d/0g9mb4Wt" target="_blank" onclick="trackAmazon()" data-fr="Commander sur Amazon →" data-en="Order on Amazon →">Commander sur Amazon →</a>
+        <a class="hero-cta hero-cta-li" href="https://www.linkedin.com/in/pierrematuchet/" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> <span data-fr="Me retrouver sur LinkedIn" data-en="Find me on LinkedIn">Me retrouver sur LinkedIn</span></a>
+        <a class="hero-cta hero-cta-mail" href="mailto:matuchet@gmail.com" data-fr="Me contacter" data-en="Contact me">Me contacter</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="hero-stat-n">Top 10</div><div class="hero-stat-l">Amazon IA</div></div>
+        <div><div class="hero-stat-n">11</div><div class="hero-stat-l" data-fr="Chapitres" data-en="Chapters">Chapitres</div></div>
+        <div><div class="hero-stat-n">55</div><div class="hero-stat-l">Quiz</div></div>
+      </div>
+    </div>
+    <div class="hero-book">
+      <div class="book-cover" id="bookCover"></div>
+    </div>
+  </div>
+</div>
+
+<div class="topbar">
+  <div class="lang-sw">
+    <button class="lang-b on" onclick="setLang('fr')">FR</button>
+    <button class="lang-b" onclick="setLang('en')">EN</button>
+  </div>
+</div>
+
+<div class="cols">
+  <!-- COL 1: QUIZ -->
+  <div class="col">
+    <div class="col-head">
+      <div class="col-title" data-fr="Valide chapitre par chapitre tes connaissances" data-en="Test your knowledge chapter by chapter">Valide chapitre par chapitre tes connaissances</div>
+    </div>
+    <div class="prog"><div class="prog-bar"><div class="prog-fill" id="pf"></div></div><div class="prog-lbl" id="pl">0/11</div></div>
+    <div class="badges" id="bg"></div>
+    <div class="col-body" id="qcol"></div>
+  </div>
+
+  <!-- COL 2: LINKEDIN -->
+  <div class="col">
+    <div class="col-head">
+      <div class="col-title" data-fr="Analyses sur <svg class='li-logo' viewBox='0 0 24 24' fill='currentColor'><path d='M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z'/></svg>" data-en="Insights on <svg class='li-logo' viewBox='0 0 24 24' fill='currentColor'><path d='M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z'/></svg>">Analyses sur <svg class='li-logo' viewBox='0 0 24 24' fill='currentColor'><path d='M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z'/></svg></div>
+    </div>
+    <div class="car"><div class="car-t" id="lit" style="--sp:90s;"></div></div>
+  </div>
+
+  <!-- COL 3: PRESSE -->
+  <div class="col">
+    <div class="col-head">
+      <div class="col-title" data-fr="La Presse en Parle" data-en="In the Press">La Presse en Parle</div>
+    </div>
+    <div class="car"><div class="car-t" id="nwt" style="--sp:75s;"></div></div>
+  </div>
+</div>
+
+<div class="mod" id="fmod">
+  <div class="mod-b">
+    <button class="mod-x" onclick="closeFQ()">&times;</button>
+    <div id="fc"></div>
+  </div>
+</div>
+
+<footer>
+  <span>&copy; 2025 Pierre Matuchet</span>
+  <a href="https://amzn.eu/d/0g9mb4Wt" target="_blank" data-fr="Commander le livre →" data-en="Order the book →">Commander le livre →</a>
+</footer>
+
+<script>
+let L='fr';
+
+// ============================================================
+// QUIZ DATA — questions de fond, scénarios, réflexion stratégique
+// ============================================================
+const CH=[
+{n:1,tf:"L'IA : révolution ou outil de plus ?",te:"AI: revolution or just another tool?",q:[
+{qf:"Votre DG dit : « L'IA, c'est juste un outil de plus pour gagner du temps. » Quelle est la meilleure réponse selon le livre ?",qe:"Your CEO says: 'AI is just another tool to save time.' What's the best response according to the book?",of:["Il a raison, c'est un outil d'optimisation","L'IA redistribue silencieusement le pouvoir de décision — c'est une révolution cognitive, pas un outil","C'est un outil pour l'IT, une révolution pour le business","C'est trop tôt pour savoir"],oe:["He's right, it's an optimization tool","AI silently redistributes decision-making power — it's a cognitive revolution, not a tool","It's a tool for IT, a revolution for business","Too early to tell"],c:1,xf:"La vraie question n'est plus « qui fait quoi » mais « qui décide quoi ». L'IA filtre, trie, priorise et déclenche des décisions — elle redistribue le pouvoir.",xe:"The real question is no longer 'who does what' but 'who decides what'. AI filters, sorts, prioritizes and triggers decisions — it redistributes power."},
+{qf:"Pourquoi cette révolution est-elle plus dangereuse que les précédentes pour les organisations qui ne bougent pas ?",qe:"Why is this revolution more dangerous than previous ones for organizations that don't move?",of:["Parce qu'elle coûte cher","Parce qu'elle est invisible, transverse et asymétrique — le fossé se creuse sans qu'on le voie","Parce qu'elle détruit les emplois","Parce qu'elle est réservée aux GAFAM"],oe:["Because it's expensive","Because it's invisible, transversal and asymmetric — the gap widens without being seen","Because it destroys jobs","Because it's reserved for GAFAM"],c:1,xf:"Pas de sirènes d'usine. L'IA s'installe dans le code, traverse tous les départements, et crée un fossé brutal entre ceux qui sont prêts et les autres.",xe:"No factory sirens. AI installs itself in code, crosses all departments, and creates a brutal gap between those ready and the rest."},
+{qf:"Une entreprise dit « on a fait un hackathon IA, on est en avance ». À quel niveau de maturité se situe-t-elle ?",qe:"A company says 'we did an AI hackathon, we're ahead'. What maturity level are they at?",of:["Niveau 0 — Spectateur","Niveau 1 — Explorateur : pilotes sans intégration","Niveau 3 — Architecte Cognitif","Niveau 4 — Entreprise Augmentée"],oe:["Level 0 — Spectator","Level 1 — Explorer: pilots without integration","Level 3 — Cognitive Architect","Level 4 — Augmented Enterprise"],c:1,xf:"Un hackathon = exploration sans intégration. Le vrai cap, c'est le Niveau 3 (délégation raisonnée) puis le 4 (IA intégrée aux processus critiques).",xe:"A hackathon = exploration without integration. The real milestone is Level 3 (reasoned delegation) then Level 4 (AI integrated in critical processes)."},
+{qf:"« L'IA accompagne l'humain. » Pourquoi le livre considère-t-il ce narratif comme dangereux ?",qe:"'AI accompanies humans.' Why does the book consider this narrative dangerous?",of:["C'est un mensonge commercial","Ce narratif masque la réalité : l'IA arbitre déjà, elle ne se contente pas d'accompagner","Parce que l'IA remplace, pas accompagne","C'est un débat sémantique sans importance"],oe:["It's a commercial lie","This narrative masks reality: AI already arbitrates, it doesn't just accompany","Because AI replaces, not accompanies","It's a meaningless semantic debate"],c:1,xf:"L'IA filtre, trie, organise et déclenche des micro-décisions qui s'accumulent en restructuration organisationnelle. Elle ne « suit » pas — elle influence.",xe:"AI filters, sorts, organizes and triggers micro-decisions that accumulate into organizational restructuring. It doesn't 'follow' — it influences."},
+{qf:"Quelle est la conséquence stratégique principale de la 4ème vague (délégation du raisonnement) ?",qe:"What is the main strategic consequence of the 4th wave (reasoning delegation)?",of:["Il faut recruter plus de data scientists","Les organisations vont être redessinées par l'IA, avec ou sans leur participation consciente","Il faut investir massivement dans l'infrastructure","Les entreprises doivent créer un département IA"],oe:["Must recruit more data scientists","Organizations will be redesigned by AI, with or without their conscious participation","Must invest massively in infrastructure","Companies must create an AI department"],c:1,xf:"Le vrai danger : l'IA redessinera votre organisation que vous le vouliez ou non. Mieux vaut piloter cette transformation que la subir.",xe:"The real danger: AI will redesign your organization whether you want it or not. Better to steer this transformation than suffer it."}
+]},
+{n:2,tf:"IA générative vs. IA agentique",te:"Generative AI vs. Agentic AI",q:[
+{qf:"Votre équipe RH utilise ChatGPT pour rédiger des fiches de poste plus vite. C'est de l'IA agentique ?",qe:"Your HR team uses ChatGPT to write job postings faster. Is that agentic AI?",of:["Oui, c'est un agent qui travaille pour eux","Non — c'est de la GenAI. Un agent irait sourcer, évaluer et présélectionner des candidats de manière autonome","C'est un hybride","Ça dépend du prompt"],oe:["Yes, it's an agent working for them","No — it's GenAI. An agent would source, evaluate and shortlist candidates autonomously","It's a hybrid","Depends on the prompt"],c:1,xf:"GenAI = réactif (attend un prompt, produit du contenu). Agentique = proactif (reçoit un objectif, agit, apprend, s'ajuste en boucle fermée).",xe:"GenAI = reactive (waits for prompt, produces content). Agentic = proactive (receives objective, acts, learns, adjusts in closed loop)."},
+{qf:"Votre DSI affirme avoir déployé 15 « agents IA ». Comment vérifier si ce sont de vrais agents ?",qe:"Your CIO claims to have deployed 15 'AI agents'. How to verify they're real agents?",of:["Vérifier le nombre de lignes de code","Tester s'ils fonctionnent en boucle fermée : objectif → action → feedback → réajustement","Vérifier le modèle utilisé","Compter le nombre d'utilisateurs"],oe:["Check the lines of code","Test if they operate in closed loop: objective → action → feedback → readjustment","Check the model used","Count the users"],c:1,xf:"La boucle fermée est le test décisif. Sans elle, vous avez des scripts sophistiqués, pas des agents.",xe:"The closed loop is the decisive test. Without it, you have sophisticated scripts, not agents."},
+{qf:"Un manager dit : « La GenAI nous fait gagner 30% de temps, c'est déjà la transformation. » Que répondre ?",qe:"A manager says: 'GenAI saves us 30% time, that's already transformation.' What to respond?",of:["Félicitations, continuez","Attention : aller plus vite sur les process d'hier n'est pas les transformer. L'agentique change le jeu, la GenAI accélère la partie.","30% c'est insuffisant, visez 50%","C'est un bon début vers l'agentique"],oe:["Congratulations, continue","Careful: going faster on yesterday's processes isn't transforming them. Agentic AI changes the game, GenAI speeds up the play.","30% isn't enough, aim for 50%","Good start toward agentic"],c:1,xf:"La confusion entre accélération et transformation est le risque stratégique numéro 1. On peut être très productif sur un modèle obsolète.",xe:"Confusion between acceleration and transformation is strategic risk #1. You can be very productive on an obsolete model."},
+{qf:"Pourquoi le passage à l'agentique exige-t-il une nouvelle posture managériale ?",qe:"Why does moving to agentic AI require a new management posture?",of:["Parce que les managers doivent apprendre à coder","Parce qu'il faut accepter de ne pas tout contrôler tout en restant responsable","Parce que l'IA remplace les managers","Parce que c'est plus complexe techniquement"],oe:["Because managers must learn to code","Because you must accept not controlling everything while remaining responsible","Because AI replaces managers","Because it's more technically complex"],c:1,xf:"L'agentique = délégation avec responsabilité. Le manager passe du pilotage d'outil au pilotage dynamique d'un coéquipier cognitif.",xe:"Agentic = delegation with responsibility. The manager moves from tool piloting to dynamic piloting of a cognitive coworker."},
+{qf:"Un agent IA vraiment agentique se distingue par sa capacité à…",qe:"A truly agentic AI agent distinguishes itself by its ability to...",of:["Générer du contenu créatif","Prendre l'initiative, agir dans les systèmes et s'ajuster sans prompt constant","Répondre en langage naturel","Traiter de grands volumes de données"],oe:["Generate creative content","Take initiative, act in systems and adjust without constant prompting","Respond in natural language","Process large data volumes"],c:1,xf:"L'autonomie d'initiative est la rupture fondamentale. L'agent fonctionne sans sollicitation humaine constante, dans une boucle fermée.",xe:"Initiative autonomy is the fundamental break. The agent operates without constant human prompting, in a closed loop."}
+]},
+{n:3,tf:"Votre plateforme est-elle prête ?",te:"Is your IT platform ready?",q:[
+{qf:"Votre agent IA peut analyser les données clients mais ne peut pas modifier le CRM. Quel est le problème ?",qe:"Your AI agent can analyze client data but can't modify the CRM. What's the problem?",of:["C'est normal, il ne faut pas lui donner trop d'accès","L'agent observe mais ne peut pas agir — il reste périphérique et n'engagera jamais de vraie transformation","Il manque de puissance de calcul","Il faut un meilleur modèle"],oe:["That's normal, shouldn't give too much access","The agent observes but can't act — it stays peripheral and will never drive real transformation","It lacks computing power","Need a better model"],c:1,xf:"Un agent qui observe sans pouvoir agir reste un gadget. La capacité d'exécution — modifier les systèmes — est ce qui engage la responsabilité organisationnelle.",xe:"An agent that observes without acting stays a gadget. Execution capability — modifying systems — is what engages organizational responsibility."},
+{qf:"Le directeur data dit : « Nos données ne sont pas assez propres pour lancer un agent. » Que répondre ?",qe:"The data director says: 'Our data isn't clean enough to launch an agent.' What to respond?",of:["Il a raison, il faut d'abord un projet data quality de 18 mois","Les données n'ont pas besoin d'être parfaites — elles doivent être accessibles et exploitables en temps réel","Il faut un data lake unifié d'abord","Attendons le prochain audit data"],oe:["He's right, need an 18-month data quality project first","Data doesn't need to be perfect — it must be accessible and exploitable in real-time","Need a unified data lake first","Wait for the next data audit"],c:1,xf:"La perfection est l'ennemi du déploiement. Des données mobilisables (accessibles, exploitables en temps réel) suffisent pour commencer.",xe:"Perfection is the enemy of deployment. Mobilizable data (accessible, exploitable in real-time) is enough to start."},
+{qf:"Quels sont les 3 piliers d'une plateforme « agent-ready » ?",qe:"What are the 3 pillars of an 'agent-ready' platform?",of:["Cloud, GPU, Data Lake","Données mobilisables, systèmes actionnables, supervision native","ERP, CRM, Data Warehouse","Sécurité, Performance, Scalabilité"],oe:["Cloud, GPU, Data Lake","Mobilizable data, actionable systems, native supervision","ERP, CRM, Data Warehouse","Security, Performance, Scalability"],c:1,xf:"Sans ces 3 piliers, vous ne déployez pas des agents — vous déployez des illusions. 80% des soi-disant agents échouent sur ce test.",xe:"Without these 3 pillars, you're not deploying agents — you're deploying illusions. 80% of so-called agents fail this test."},
+{qf:"Pourquoi la supervision native est-elle indispensable — pas juste un « nice to have » ?",qe:"Why is native supervision essential — not just a 'nice to have'?",of:["Pour les audits réglementaires uniquement","Parce que vous devez comprendre, corriger et apprendre de chaque action de l'agent en temps réel","Pour rassurer les équipes","Pour les reportings au board"],oe:["For regulatory audits only","Because you must understand, correct and learn from every agent action in real-time","To reassure teams","For board reporting"],c:1,xf:"La supervision n'est pas du contrôle — c'est la capacité de comprendre, corriger et enrichir le comportement de l'agent. C'est ce qui rend l'autonomie soutenable.",xe:"Supervision isn't control — it's the ability to understand, correct and enrich agent behavior. That's what makes autonomy sustainable."},
+{qf:"Un agent IA touche vos systèmes critiques. Quelle approche cybersécurité adopter ?",qe:"An AI agent touches your critical systems. What cybersecurity approach to take?",of:["On verra après le déploiement","Security by design : moindre privilège, supervision native, tests adverses, isolation","Un firewall standard suffit","On limite l'agent aux données non sensibles"],oe:["We'll see after deployment","Security by design: least privilege, native supervision, adversity testing, isolation","A standard firewall is enough","Limit the agent to non-sensitive data"],c:1,xf:"L'IA n'invente pas de nouvelles menaces mais élargit la surface d'attaque. La sécurité est un prérequis de conception, pas un ajout.",xe:"AI doesn't invent new threats but expands the attack surface. Security is a design prerequisite, not an add-on."}
+]},
+{n:4,tf:"GenAI : coup de fouet et tremplin",te:"GenAI: boost and springboard",q:[
+{qf:"Votre entreprise a déployé la GenAI massivement. Tout le monde l'utilise. Pourtant, rien n'a vraiment changé. Pourquoi ?",qe:"Your company massively deployed GenAI. Everyone uses it. Yet nothing really changed. Why?",of:["Le modèle n'est pas assez puissant","La GenAI est isolée : pas d'intégration métier, pas de mémoire collective, pas de sponsor business","Les gens ne savent pas prompter","Le ROI prend du temps"],oe:["The model isn't powerful enough","GenAI is isolated: no business integration, no collective memory, no business sponsor","People don't know how to prompt","ROI takes time"],c:1,xf:"Les 3 angles morts : outil isolé, gains non capitalisés collectivement, pas de porteur business qui transforme l'essai en process.",xe:"The 3 blind spots: isolated tool, gains not collectively capitalized, no business carrier to turn the trial into process."},
+{qf:"Comment transformer l'élan GenAI en transformation structurelle avant qu'il ne s'évapore ?",qe:"How to transform GenAI momentum into structural transformation before it evaporates?",of:["Acheter plus de licences","Ancrer dans des objectifs concrets, connecter aux données métier, installer un sponsor business, créer des boucles de feedback","Organiser plus de formations","Attendre les prochains modèles"],oe:["Buy more licenses","Anchor in concrete objectives, connect to business data, install a business sponsor, create feedback loops","Organize more training","Wait for next models"],c:1,xf:"La GenAI crée de la valeur réelle quand elle est ancrée, connectée, sponsorisée et bouclée. Sinon, l'élan s'évapore.",xe:"GenAI creates real value when anchored, connected, sponsored and looped. Otherwise, momentum evaporates."},
+{qf:"Le « piège de la micro-productivité » selon Bain, c'est quoi concrètement ?",qe:"Bain's 'micro-productivity trap' — what is it concretely?",of:["Les gains sont trop petits pour être mesurés","L'accumulation de gains individuels crée l'illusion de transformation alors qu'on accélère les process d'hier","La GenAI coûte plus qu'elle ne rapporte","Les équipes deviennent dépendantes de l'IA"],oe:["Gains too small to measure","Accumulation of individual gains creates transformation illusion while accelerating yesterday's processes","GenAI costs more than it returns","Teams become AI-dependent"],c:1,xf:"Chacun gagne 20 minutes par jour. L'entreprise croit se transformer. En réalité, elle fait la même chose, juste plus vite. Les concurrents, eux, changent le modèle.",xe:"Everyone saves 20 minutes daily. The company believes it's transforming. In reality, doing the same thing, just faster. Competitors are changing the model."},
+{qf:"Quelle est la vraie différence entre GenAI et agentique au niveau stratégique ?",qe:"What's the real strategic difference between GenAI and agentic?",of:["GenAI est gratuite, l'agentique coûte cher","GenAI donne de la vitesse, l'agentique change les règles du jeu","GenAI est pour les individus, l'agentique pour les entreprises","Il n'y a pas de vraie différence"],oe:["GenAI is free, agentic is expensive","GenAI gives speed, agentic changes the rules of the game","GenAI for individuals, agentic for enterprises","No real difference"],c:1,xf:"La GenAI accélère votre jeu actuel. L'agentique change le terrain. Confondre les deux = risque stratégique majeur.",xe:"GenAI accelerates your current game. Agentic changes the playing field. Confusing them = major strategic risk."},
+{qf:"Un concurrent reste sur la GenAI pendant que vous passez à l'agentique. Quel est son risque ?",qe:"A competitor stays on GenAI while you move to agentic. What's their risk?",of:["Aucun, la GenAI est suffisante","Pendant qu'il optimise localement, vous transformez vos processus critiques — le fossé devient irrattrapable","Il sera plus agile","Il économisera de l'argent"],oe:["None, GenAI is sufficient","While they optimize locally, you transform critical processes — the gap becomes insurmountable","They'll be more agile","They'll save money"],c:1,xf:"La GenAI peut rester localement optimisante pendant que les concurrents transforment leurs processus core. Le fossé est asymétrique et s'accélère.",xe:"GenAI can remain locally optimizing while competitors transform core processes. The gap is asymmetric and accelerating."}
+]},
+{n:5,tf:"Transformer avec l'IA agentique",te:"Transform with Agentic AI",q:[
+{qf:"Votre premier agent est en production depuis 3 mois. L'usage baisse, les escalades augmentent. Que se passe-t-il ?",qe:"Your first agent has been live for 3 months. Usage drops, escalations increase. What's happening?",of:["L'agent n'est pas assez bon, il faut le remplacer","Ce sont des signaux faibles d'une dérive silencieuse — il faut analyser et recalibrer, pas remplacer","Les utilisateurs sont résistants au changement","Le modèle doit être mis à jour"],oe:["The agent isn't good enough, replace it","These are weak signals of silent drift — analyze and recalibrate, don't replace","Users resist change","The model needs updating"],c:1,xf:"Baisse d'usage + hausse des escalades = dérive silencieuse. L'agent dérive de son intention initiale sans alerte visible. La supervision détecte, corrige, enrichit.",xe:"Usage decline + escalation increase = silent drift. The agent drifts from initial intent without visible alerts. Supervision detects, corrects, enriches."},
+{qf:"On vous demande de monter l'équipe pour votre premier projet agentique. Qui choisir ?",qe:"You're asked to build the team for your first agentic project. Who to choose?",of:["Le meilleur data scientist et 3 développeurs","Un sponsor business, un product owner, un expert IA et un utilisateur terrain","Le DSI et le CDO","Un chef de projet et des consultants externes"],oe:["Best data scientist and 3 developers","A business sponsor, product owner, AI expert and field user","The CIO and CDO","A project manager and external consultants"],c:1,xf:"4 rôles clés : le sponsor porte le problème, le PO vit avec l'agent au quotidien, l'expert optimise, le terrain détecte les micro-erreurs avant qu'elles ne deviennent systémiques.",xe:"4 key roles: sponsor carries the problem, PO lives with the agent daily, expert optimizes, field user detects micro-errors before they become systemic."},
+{qf:"L'équipe veut attendre 6 mois pour « perfectionner l'agent » avant la mise en production. Votre avis ?",qe:"The team wants to wait 6 months to 'perfect the agent' before going live. Your take?",of:["Sage décision, la qualité d'abord","Erreur stratégique. Les agents s'améliorent par l'usage réel. MVP, puis itération. Attendre = perdre du temps d'apprentissage.","3 mois suffisent","Ça dépend du budget"],oe:["Wise decision, quality first","Strategic error. Agents improve through real usage. MVP, then iterate. Waiting = losing learning time.","3 months is enough","Depends on budget"],c:1,xf:"Un agent parfait n'existe pas. L'activation doit se faire en semaines, pas en mois. Chaque jour sans usage réel = un jour d'apprentissage perdu.",xe:"A perfect agent doesn't exist. Activation should happen in weeks, not months. Every day without real usage = a lost learning day."},
+{qf:"ServiceNow a atteint 350M$ de gains internes en 2024. Quelle est la leçon stratégique ?",qe:"ServiceNow reached $350M internal gains in 2024. What's the strategic lesson?",of:["Il faut beaucoup d'argent pour réussir","Ils se sont auto-disruptés : agents intégrés à la plateforme avant que les concurrents ne le fassent","Ils ont juste automatisé le support","C'est un cas isolé"],oe:["Takes a lot of money to succeed","They self-disrupted: agents integrated into platform before competitors could","They just automated support","It's an isolated case"],c:1,xf:"ServiceNow s'est auto-disrupté. 54% de réduction du temps de traitement, 18% de tickets résolus sans humain, 8 secondes vs 4 jours. La leçon : disruptez-vous avant qu'on ne vous disrupte.",xe:"ServiceNow self-disrupted. 54% processing time reduction, 18% tickets resolved without human, 8 seconds vs 4 days. Lesson: disrupt yourself before others disrupt you."},
+{qf:"Quels sont les 3 tueurs silencieux d'un agent IA en production ?",qe:"What are the 3 silent killers of an AI agent in production?",of:["Budget, talent, technologie","Gouvernance floue, absence de boucle de feedback, dérive sans monitoring","Données, modèle, infrastructure","Résistance, complexité, coût"],oe:["Budget, talent, technology","Unclear governance, no feedback loop, drift without monitoring","Data, model, infrastructure","Resistance, complexity, cost"],c:1,xf:"Sans gouvernance claire, sans feedback qui enrichit, sans monitoring qui détecte les dérives — l'agent devient un risque au lieu d'un levier.",xe:"Without clear governance, enriching feedback, drift-detecting monitoring — the agent becomes a risk instead of a lever."}
+]},
+{n:6,tf:"Réussir son projet agentique",te:"Succeeding with agentic projects",q:[
+{qf:"Un manager dit : « Standardiser nos processus, c'est de la bureaucratie. » Pourquoi a-t-il tort dans le contexte agentique ?",qe:"A manager says: 'Standardizing processes is bureaucracy.' Why is he wrong in the agentic context?",of:["Il a raison, la flexibilité prime","Les agents raisonnent dans des paramètres explicites. Sans cadre formel, leur exploration devient erratique.","La standardisation n'est utile que pour les grands groupes","C'est une question de culture"],oe:["He's right, flexibility comes first","Agents reason within explicit parameters. Without formal framework, their exploration becomes erratic.","Standardization only useful for large companies","It's a culture question"],c:1,xf:"Standardiser ≠ rigidifier. C'est donner à l'agent les paramètres explicites dont il a besoin pour raisonner. Sans eux, il explore tout, y compris les mauvaises directions.",xe:"Standardize ≠ rigidify. It's giving the agent the explicit parameters it needs to reason. Without them, it explores everything, including wrong directions."},
+{qf:"Votre agent IA réduit le temps de traitement de 60%. Le board est content. Mais quel coût caché devez-vous surveiller ?",qe:"Your AI agent reduces processing time by 60%. The board is happy. But what hidden cost should you monitor?",of:["Le coût des licences cloud","Les coûts distribués : retard résiduel, mauvaises décisions sur les cas complexes, désynchronisation, reprises","Le coût de maintenance du modèle","Le coût de formation des équipes"],oe:["Cloud license costs","Distributed costs: residual delay, poor decisions on complex cases, desynchronization, reworks","Model maintenance cost","Team training cost"],c:1,xf:"L'agentique attaque 4 coûts distribués : retard décisionnel, mauvaises décisions, désynchronisation entre acteurs, et non-qualité (reprises, escalades, corrections).",xe:"Agentic attacks 4 distributed costs: decision delay, poor decisions, actor desynchronization, and non-quality (reworks, escalations, corrections)."},
+{qf:"Quel est l'outil clé pour décider ce qu'un agent peut faire seul, ce qui doit être supervisé, et ce qui reste humain ?",qe:"What's the key tool for deciding what an agent can do alone, what needs supervision, and what stays human?",of:["Une matrice RACI","La cartographie des décisions — mapping autonome / supervisé / humain pour chaque décision","Un comité de gouvernance","Un audit externe"],oe:["A RACI matrix","Decision cartography — mapping autonomous / supervised / human for each decision","A governance committee","An external audit"],c:1,xf:"La cartographie des décisions identifie pour chaque décision de votre processus son degré d'autonomie possible. Et ce mapping évolue avec l'expérience et la confiance.",xe:"Decision cartography identifies for each process decision its possible autonomy level. This mapping evolves with experience and trust."},
+{qf:"Un agent est en production mais personne ne l'utilise. Quel facteur critique a probablement été négligé ?",qe:"An agent is live but nobody uses it. Which critical factor was likely neglected?",of:["Le modèle n'est pas assez bon","L'adoption par les équipes — sans acceptation des utilisateurs terrain, aucun agent ne survit","Le budget marketing interne","La validation du board"],oe:["The model isn't good enough","Team adoption — without field user acceptance, no agent survives","Internal marketing budget","Board validation"],c:1,xf:"C'est le 10ème facteur de succès et souvent le plus négligé. Un agent peut être techniquement parfait — sans adoption, il est mort.",xe:"It's the 10th success factor and often the most neglected. An agent can be technically perfect — without adoption, it's dead."},
+{qf:"D'où vient réellement la valeur économique de l'IA agentique ?",qe:"Where does agentic AI's economic value really come from?",of:["La réduction d'effectifs","La réduction de latence décisionnelle + meilleure qualité + moins de reprises + réallocation humaine vers le jugement","La réduction des coûts IT","L'augmentation du chiffre d'affaires direct"],oe:["Headcount reduction","Reduced decision latency + better quality + fewer reworks + human reallocation to judgment","IT cost reduction","Direct revenue increase"],c:1,xf:"Pas de remplacement d'humains — une réallocation silencieuse. Les humains passent de l'exécution répétitive au jugement à haute valeur.",xe:"Not human replacement — silent reallocation. Humans move from repetitive execution to high-value judgment."}
+]},
+{n:7,tf:"Le nouveau pilotage hybride",te:"New hybrid governance",q:[
+{qf:"Un comité IA responsable valide un agent une fois par trimestre. Le livre dit que c'est insuffisant. Pourquoi ?",qe:"A responsible AI committee validates an agent quarterly. The book says it's insufficient. Why?",of:["Il faudrait mensuel","Les comités fixent des principes, mais la gouvernance opérationnelle doit être continue et distribuée dans les lignes métier","Il faut un comité hebdomadaire","C'est suffisant si le comité est senior"],oe:["Should be monthly","Committees set principles, but operational governance must be continuous and distributed in business lines","Need a weekly committee","Sufficient if committee is senior"],c:1,xf:"Les comités IA responsable sont réglementaires, pas opérationnels. La vraie gouvernance vit là où les agents agissent — dans les lignes métier, en continu.",xe:"Responsible AI committees are regulatory, not operational. Real governance lives where agents act — in business lines, continuously."},
+{qf:"Votre agent prend des décisions cohérentes à 95%. Les 5% restants sont problématiques. Comment piloter ?",qe:"Your agent makes consistent decisions at 95%. The remaining 5% are problematic. How to manage?",of:["95% c'est excellent, ignorer les 5%","Les signaux faibles comptent plus que les métriques. Analyser les escalades, le sentiment utilisateur, les incohérences — pas juste le taux global.","Améliorer le modèle","Augmenter le volume de données d'entraînement"],oe:["95% is excellent, ignore the 5%","Weak signals matter more than metrics. Analyze escalations, user sentiment, inconsistencies — not just the global rate.","Improve the model","Increase training data volume"],c:1,xf:"Les signaux faibles (escalades en hausse, usage en baisse, sentiment dégradé) détectent les dérives avant que les KPIs ne décrochent.",xe:"Weak signals (rising escalations, declining usage, degraded sentiment) detect drift before KPIs decline."},
+{qf:"Comment le rôle du manager évolue-t-il fondamentalement dans un système hybride humain-agent ?",qe:"How does the manager's role fundamentally evolve in a human-agent hybrid system?",of:["Il disparaît, l'IA gère","Il passe du contrôle d'exécution à l'orchestration d'un collectif hybride — feedback loops, seuils évolutifs, coordination","Il devient purement technique","Il se concentre uniquement sur les humains"],oe:["It disappears, AI manages","From execution control to hybrid collective orchestration — feedback loops, evolving thresholds, coordination","Becomes purely technical","Focuses only on humans"],c:1,xf:"Le manager ne distribue plus des tâches — il orchestre des systèmes vivants. Comme un chef d'orchestre dont les musiciens (agents) improvisent dans un cadre.",xe:"The manager no longer distributes tasks — they orchestrate living systems. Like a conductor whose musicians (agents) improvise within a framework."},
+{qf:"Quelle est la structure de gouvernance hybride proposée par le livre ?",qe:"What hybrid governance structure does the book propose?",of:["IT au centre, business en périphérie","3 cercles : Humain (sens + valeurs) → Agent (exécution autonome) → Infrastructure (cohérence + sécurité)","Un comité transverse","Une équipe dédiée"],oe:["IT at center, business at periphery","3 circles: Human (meaning + values) → Agent (autonomous execution) → Infrastructure (coherence + security)","A cross-functional committee","A dedicated team"],c:1,xf:"3 cercles concentriques. L'humain décide du sens. L'agent exécute avec autonomie locale. L'infrastructure assure la cohérence de l'ensemble.",xe:"3 concentric circles. Human decides meaning. Agent executes with local autonomy. Infrastructure ensures overall coherence."},
+{qf:"La boucle de feedback est qualifiée d'« infrastructure core ». C'est exagéré ?",qe:"The feedback loop is called 'core infrastructure'. Is that an exaggeration?",of:["Oui, c'est juste un outil d'amélioration","Non — c'est l'infrastructure qui permet l'autonomie tout en préservant la responsabilité. Sans elle, pas de gouvernance viable.","C'est important mais pas critique","Ça dépend du contexte"],oe:["Yes, just an improvement tool","No — it's the infrastructure enabling autonomy while preserving responsibility. Without it, no viable governance.","Important but not critical","Depends on context"],c:1,xf:"Sans feedback loop, l'autonomie devient anarchie. La boucle permet : qui corrige, sous quelle forme, comment c'est incorporé, et la traçabilité de chaque intervention.",xe:"Without feedback loop, autonomy becomes anarchy. The loop enables: who corrects, in what form, how it's incorporated, and traceability of every intervention."}
+]},
+{n:8,tf:"La Révolution Conversationnelle",te:"The Conversational Revolution",q:[
+{qf:"Votre client doit remplir un formulaire de 15 champs pour une simple réclamation. C'est quel niveau de maturité ?",qe:"Your client must fill a 15-field form for a simple claim. What maturity level is that?",of:["Normal, c'est structuré","Niveau 0 — Transactionnel : la tyrannie du formulaire. Le client traduit sa réalité en langage système.","Niveau 1 — Scripté","Niveau 2 — Contextuel"],oe:["Normal, it's structured","Level 0 — Transactional: the form tyranny. The client translates their reality into system language.","Level 1 — Scripted","Level 2 — Contextual"],c:1,xf:"L'inversion de la charge de compréhension : ce n'est plus à l'humain de traduire, mais au système de comprendre l'intention humaine naturellement.",xe:"The comprehension burden inversion: it's no longer for humans to translate, but for the system to understand human intent naturally."},
+{qf:"Deux entreprises utilisent le même LLM. L'une fidélise ses clients, l'autre non. Pourquoi ?",qe:"Two companies use the same LLM. One retains clients, the other doesn't. Why?",of:["Meilleur marketing","La différence est dans le contexte propriétaire : historique client, règles métier, données accumulées","Un meilleur prompt","Plus de puissance de calcul"],oe:["Better marketing","The difference is in proprietary context: client history, business rules, accumulated data","A better prompt","More computing power"],c:1,xf:"Quand le LLM devient commodité, le contexte propriétaire (historique + règles + données) crée le fossé concurrentiel. C'est la spirale propriétaire.",xe:"When the LLM becomes commodity, proprietary context (history + rules + data) creates the competitive moat. That's the proprietary spiral."},
+{qf:"Par quoi commencer concrètement pour une stratégie conversationnelle ?",qe:"Where to start concretely for a conversational strategy?",of:["Acheter un chatbot","Phase 1 : l'archéologie des données non structurées — arrêter de jeter les conversations, identifier les « intentions orphelines »","Choisir le meilleur modèle","Former les équipes au prompting"],oe:["Buy a chatbot","Phase 1: archaeology of non-structured data — stop discarding conversations, identify 'orphaned intentions'","Choose the best model","Train teams on prompting"],c:1,xf:"Mois 1-3 : brancher la transcription, analyser sémantiquement les emails entrants, identifier les requêtes complexes que vos systèmes ne savent pas traiter.",xe:"Months 1-3: wire transcription, semantically analyze incoming emails, identify complex requests your systems can't handle."},
+{qf:"La « spirale propriétaire du contexte » — c'est quoi et pourquoi c'est stratégique ?",qe:"The 'proprietary context spiral' — what is it and why is it strategic?",of:["Un problème de RGPD","Un cycle vertueux : échange naturel → données plus riches → profil plus précis → meilleures prédictions → plus de fidélité → plus de données → fossé concurrentiel","Une technique de data mining","Un concept théorique"],oe:["A GDPR issue","A virtuous cycle: natural exchange → richer data → more precise profile → better predictions → more loyalty → more data → competitive moat","A data mining technique","A theoretical concept"],c:1,xf:"La conversation libère ce que les formulaires écrasent : nuance, hésitation, contexte. Ces données intimes créent un avantage que les concurrents ne peuvent pas copier.",xe:"Conversation liberates what forms crush: nuance, hesitation, context. This intimate data creates an advantage competitors can't copy."},
+{qf:"Quel est le rôle du « double loop learning » dans la Phase 3 d'implémentation ?",qe:"What's the role of 'double loop learning' in Phase 3 implementation?",of:["Un concept académique","Boucle 1 : l'IA traite. Boucle 2 : quand l'IA doute, l'humain corrige ET enseigne à l'agent. Chaque exception devient une règle.","Un type de machine learning","Une technique de debugging"],oe:["An academic concept","Loop 1: AI handles. Loop 2: when AI doubts, human corrects AND teaches the agent. Every exception becomes a rule.","A type of machine learning","A debugging technique"],c:1,xf:"L'humain ne se contente pas de résoudre le cas — il « corrige » l'agent. Chaque exception traitée par un humain enrichit le système de manière permanente.",xe:"The human doesn't just solve the case — they 'correct' the agent. Every exception handled by a human permanently enriches the system."}
+]},
+{n:9,tf:"IA responsable : confiance comme système",te:"Responsible AI: trust as a system",q:[
+{qf:"Le directeur juridique dit : « L'IA responsable va nous ralentir. » Que répondre ?",qe:"The legal director says: 'Responsible AI will slow us down.' What to respond?",of:["Il a raison, c'est le prix de la conformité","Au contraire : les organisations qui peuvent expliquer le comportement de leurs agents décident avec plus de confiance et avancent plus vite","C'est un compromis nécessaire","On peut faire sans au début"],oe:["He's right, it's the price of compliance","On the contrary: organizations that can explain agent behavior decide with more confidence and move faster","It's a necessary compromise","Can do without it at first"],c:1,xf:"L'IA responsable = accélérateur, pas frein. L'explicabilité crée la confiance. La confiance permet la vitesse. La vitesse crée l'avantage.",xe:"Responsible AI = accelerator, not brake. Explainability creates trust. Trust enables speed. Speed creates advantage."},
+{qf:"Avant de déployer un agent, 5 questions du RAI Canvas. Lesquelles ?",qe:"Before deploying an agent, 5 RAI Canvas questions. Which ones?",of:["Budget, planning, tech, équipe, KPIs","Pour qui agit-il ? Que peut-il seul ? Quelles données ? Est-il explicable ? Comment l'améliorer ?","Légal, éthique, technique, business, RH","ROI, risque, coût, délai, scalabilité"],oe:["Budget, planning, tech, team, KPIs","For whom does it act? What can it do alone? What data? Is it explainable? How to improve?","Legal, ethical, technical, business, HR","ROI, risk, cost, timeline, scalability"],c:1,xf:"5 questions simples mais non négociables. Si vous ne pouvez pas répondre aux 5 avant le déploiement, vous n'êtes pas prêt.",xe:"5 simple but non-negotiable questions. If you can't answer all 5 before deployment, you're not ready."},
+{qf:"Tout agent déployé doit pouvoir répondre à 3 questions fondamentales. Lesquelles ?",qe:"Every deployed agent must answer 3 fundamental questions. Which ones?",of:["Qui l'a créé ? Combien ça coûte ? Quand sera-t-il mis à jour ?","Qu'a-t-il fait ? Pourquoi ? Avec quelles données ?","Est-il légal ? Éthique ? Rentable ?","Quel modèle ? Quelle version ? Quel prompt ?"],oe:["Who created it? How much does it cost? When will it be updated?","What did it do? Why? With what data?","Is it legal? Ethical? Profitable?","Which model? Which version? Which prompt?"],c:1,xf:"Ces 3 réponses doivent être disponibles en temps réel, compréhensibles par des non-techniciens, et exposer les limites du système.",xe:"These 3 answers must be available in real-time, understandable by non-technicians, and expose system limitations."},
+{qf:"Quand tout le monde a accès aux mêmes LLMs, quel est le vrai différenciateur concurrentiel ?",qe:"When everyone has access to the same LLMs, what's the real competitive differentiator?",of:["La vitesse du hardware","L'explicabilité — pouvoir justifier chaque décision de l'agent","Le volume de données","Le nombre d'agents déployés"],oe:["Hardware speed","Explainability — ability to justify every agent decision","Data volume","Number of deployed agents"],c:1,xf:"Les modèles se commoditisent. Celui qui peut expliquer, auditer et justifier le comportement de ses agents gagne la confiance — et le marché.",xe:"Models are commoditizing. Whoever can explain, audit and justify agent behavior wins trust — and the market."},
+{qf:"L'IA responsable est-elle un sujet technique ou culturel ?",qe:"Is responsible AI a technical or cultural topic?",of:["Purement technique","Fondamentalement culturel : équipes qui lisent les décisions, managers qui interviennent, culture qui assume la responsabilité","Purement juridique","Un mix 50/50"],oe:["Purely technical","Fundamentally cultural: teams that read decisions, managers that intervene, culture that assumes responsibility","Purely legal","A 50/50 mix"],c:1,xf:"La technologie sans culture de responsabilité = un angle mort croissant. L'IA responsable exige des humains formés et habilités, pas juste des algorithmes audités.",xe:"Technology without responsibility culture = growing blind spot. Responsible AI requires trained and empowered humans, not just audited algorithms."}
+]},
+{n:10,tf:"Le nouveau monde du travail",te:"The new world of work",q:[
+{qf:"Chaque révolution industrielle a créé une figure professionnelle dominante. Quelle est celle de l'ère agentique ?",qe:"Each industrial revolution created a dominant professional figure. What's the agentic era's?",of:["Le data scientist","L'Interprète / Arbitre / Orchestrateur — celui qui fait sens, décide et coordonne entre humains et agents","L'ingénieur prompt","Le manager augmenté"],oe:["The data scientist","The Interpreter / Arbiter / Orchestrator — the one who makes sense, decides and coordinates between humans and agents","The prompt engineer","The augmented manager"],c:1,xf:"Vapeur → Ouvrier. Électricité → Contremaître. Automatisation → Technicien. Numérique → Manager. Agentique → Interprète/Arbitre/Orchestrateur.",xe:"Steam → Worker. Electricity → Foreman. Automation → Technician. Digital → Manager. Agentic → Interpreter/Arbiter/Orchestrator."},
+{qf:"Un collaborateur dit : « L'IA va faire mon travail. » Quelle est la réponse du livre ?",qe:"An employee says: 'AI will do my job.' What's the book's answer?",of:["Oui, préparez-vous","Non — votre travail va muter. La valeur passe du « faire » à l'« interpréter, arbitrer, orchestrer ».","Seuls les métiers répétitifs sont concernés","Personne ne sait"],oe:["Yes, prepare yourself","No — your job will mutate. Value shifts from 'doing' to 'interpreting, arbitrating, orchestrating'.","Only repetitive jobs are affected","Nobody knows"],c:1,xf:"Ce n'est pas un remplacement mais une mutation des rôles. Le travail devient intrinsèquement hybride — coordination humain-agent, pas substitution.",xe:"Not replacement but role mutation. Work becomes inherently hybrid — human-agent coordination, not substitution."},
+{qf:"Avant on était légitime si on savait. Maintenant on est légitime si on…",qe:"Before you were legitimate if you knew. Now you're legitimate if you...",of:["Produit plus vite","Code mieux","Explique ce que l'IA ne sait pas","A plus d'expérience"],oe:["Produce faster","Code better","Explain what AI doesn't know","Have more experience"],c:2,xf:"Le nouveau pacte professionnel : la légitimité vient de la capacité à interpréter, arbitrer et expliquer — pas de l'exécution brute.",xe:"The new professional compact: legitimacy comes from the ability to interpret, arbitrate and explain — not from raw execution."},
+{qf:"Qu'est-ce que la « cohabitation cognitive » implique concrètement pour un professionnel ?",qe:"What does 'cognitive cohabitation' concretely imply for a professional?",of:["Utiliser ChatGPT au quotidien","Savoir corriger un agent, le briefer, définir ses seuils d'autonomie et auditer son comportement","Comprendre le machine learning","Avoir un double diplôme tech/business"],oe:["Use ChatGPT daily","Know how to correct an agent, brief it, define its autonomy thresholds and audit its behavior","Understand machine learning","Have a dual tech/business degree"],c:1,xf:"La cohabitation cognitive = des compétences de discernement. Savoir quand faire confiance à l'agent et quand le corriger. C'est le nouveau skill critique.",xe:"Cognitive cohabitation = discernment skills. Knowing when to trust the agent and when to correct it. That's the new critical skill."},
+{qf:"Quel changement RH est le plus urgent selon le livre ?",qe:"What HR change is most urgent according to the book?",of:["Recruter des data scientists","Intégrer la cohabitation cognitive dans les grilles de compétences : corriger les agents, briefer, auditer, définir les seuils d'autonomie","Réduire les effectifs","Former tout le monde au prompting"],oe:["Recruit data scientists","Integrate cognitive cohabitation into competency frameworks: correct agents, brief, audit, define autonomy thresholds","Reduce headcount","Train everyone on prompting"],c:1,xf:"Les grilles RH doivent intégrer cette nouvelle réalité. Les managers orchestrent des systèmes vivants, pas des hiérarchies classiques.",xe:"HR frameworks must integrate this new reality. Managers orchestrate living systems, not classical hierarchies."}
+]},
+{n:11,tf:"AGI : l'hyperaccélération ?",te:"AGI: the hyperacceleration?",q:[
+{qf:"L'AGI, c'est la 5ème révolution industrielle ?",qe:"Is AGI the 5th industrial revolution?",of:["Oui, c'est la prochaine rupture","Non — c'est le stress test ultime de la 4ème. Elle va révéler ce que les organisations n'ont pas assez formalisé.","C'est un mythe","Impossible à prévoir"],oe:["Yes, it's the next disruption","No — it's the ultimate stress test of the 4th. It will reveal what organizations haven't formalized enough.","It's a myth","Impossible to predict"],c:1,xf:"L'AGI ne crée pas les problèmes — elle les révèle. Processus implicites, rôles flous, gouvernance de façade. Elle pousse la coordination agentique au point de rupture.",xe:"AGI doesn't create problems — it reveals them. Implicit processes, unclear roles, facade governance. It pushes agentic coordination to breaking point."},
+{qf:"Zuckerberg, Altman et Musk ont 3 visions très différentes de l'AGI. Pourquoi ça compte pour vous aujourd'hui ?",qe:"Zuckerberg, Altman and Musk have 3 very different AGI visions. Why does this matter for you today?",of:["Ça ne nous concerne pas encore","Leurs visions influencent l'infrastructure qui se construit maintenant — et donc les outils que vous utiliserez demain","C'est un débat philosophique","Seul Altman a raison"],oe:["It doesn't concern us yet","Their visions influence the infrastructure being built now — and therefore the tools you'll use tomorrow","It's a philosophical debate","Only Altman is right"],c:1,xf:"Zuckerberg (IA personnelle), Altman (ouverte + éthique), Musk (défensive). Ces visions façonnent les plateformes, les régulations et les choix d'infrastructure d'aujourd'hui.",xe:"Zuckerberg (personal AI), Altman (open + ethical), Musk (defensive). These visions shape today's platforms, regulations and infrastructure choices."},
+{qf:"GenAI produit. Les agents exécutent et planifient. L'AGI…",qe:"GenAI produces. Agents execute and plan. AGI...",of:["Fait tout plus vite","Pense, généralise et transfère des compétences entre domaines — elle devient co-acteur stratégique","Remplace tous les emplois","N'arrivera jamais"],oe:["Does everything faster","Thinks, generalizes and transfers skills across domains — becomes a strategic co-actor","Replaces all jobs","Will never arrive"],c:1,xf:"La discontinuité : GenAI = outil, Agents = cadre d'exécution, AGI = co-acteur qui réinterprète le cadre lui-même. Un saut qualitatif, pas quantitatif.",xe:"The discontinuity: GenAI = tool, Agents = execution framework, AGI = co-actor that reinterprets the framework itself. A qualitative leap, not quantitative."},
+{qf:"Quelle est la meilleure préparation à l'AGI selon le livre ?",qe:"What's the best AGI preparation according to the book?",of:["Investir dans la recherche fondamentale","Maîtriser les fondamentaux de l'agentique maintenant : processus clairs, rôles définis, gouvernance transparente, capacité d'adaptation","Attendre et observer","Recruter des chercheurs en IA"],oe:["Invest in fundamental research","Master agentic fundamentals now: clear processes, defined roles, transparent governance, adaptation capacity","Wait and observe","Recruit AI researchers"],c:1,xf:"L'AGI ne fera pas table rase — elle accélérera et radicalisera ce que vous aurez mis en place. Votre préparation, c'est votre maturité agentique d'aujourd'hui.",xe:"AGI won't start from scratch — it will accelerate and radicalize what you've built. Your preparation is your agentic maturity today."},
+{qf:"L'AGI crée ou révèle les problèmes organisationnels ?",qe:"Does AGI create or reveal organizational problems?",of:["Elle crée de nouveaux problèmes","Elle révèle ce qui n'a pas été assez formalisé — processus, rôles, gouvernance, culture","Les deux à parts égales","Aucun impact organisationnel"],oe:["Creates new problems","Reveals what hasn't been formalized enough — processes, roles, governance, culture","Both equally","No organizational impact"],c:1,xf:"L'AGI est un révélateur organisationnel. Elle expose les failles : là où les processus sont implicites, les rôles flous, la gouvernance décorative.",xe:"AGI is an organizational revealer. It exposes flaws: where processes are implicit, roles unclear, governance decorative."}
+]}
+];
+
+const FQ=[
+{qf:"Quel est le fil rouge entre GenAI, agentique et AGI ?",qe:"What's the thread between GenAI, agentic and AGI?",of:["La technologie","La délégation progressive du raisonnement — produire, décider, puis penser","Le coût","La vitesse"],oe:["Technology","Progressive reasoning delegation — produce, decide, then think","Cost","Speed"],c:1,xf:"Produire (GenAI) → Décider et exécuter (Agentique) → Penser et généraliser (AGI). La délégation cognitive s'approfondit à chaque étape.",xe:"Produce (GenAI) → Decide and execute (Agentic) → Think and generalize (AGI). Cognitive delegation deepens at each stage."},
+{qf:"Quel mécanisme traverse tout le livre comme infrastructure fondamentale ?",qe:"What mechanism runs through the whole book as fundamental infrastructure?",of:["Le machine learning","La boucle de feedback — apprentissage continu, gouvernance, supervision, amélioration","Le cloud computing","Le prompting"],oe:["Machine learning","The feedback loop — continuous learning, governance, supervision, improvement","Cloud computing","Prompting"],c:1,xf:"La boucle de feedback apparaît dans chaque chapitre : apprentissage des agents, gouvernance hybride, supervision, amélioration post-déploiement, RAI.",xe:"The feedback loop appears in every chapter: agent learning, hybrid governance, supervision, post-deployment improvement, RAI."},
+{qf:"Le plus grand danger de l'IA en entreprise selon le livre ?",qe:"The biggest AI danger in enterprises according to the book?",of:["La perte d'emplois","Confondre accélération et transformation — être productif sur un modèle obsolète","Les biais","Le coût"],oe:["Job losses","Confusing acceleration with transformation — being productive on an obsolete model","Bias","Cost"],c:1,xf:"On peut être très efficient… sur un modèle que les concurrents ont déjà dépassé. C'est le risque stratégique #1.",xe:"You can be very efficient... on a model competitors have already surpassed. That's strategic risk #1."},
+{qf:"Pourquoi « boussole, pas GPS » ?",qe:"Why 'compass, not GPS'?",of:["C'est du marketing","Parce que les modèles évoluent chaque semaine — un plan parfait est obsolète avant d'être exécuté. Il faut s'orienter, pas suivre une route.","Parce que c'est un livre court","Parce que l'auteur n'est pas technique"],oe:["Marketing","Because models evolve weekly — a perfect plan is obsolete before execution. You need orientation, not a route.","Short book","Non-technical author"],c:1,xf:"Attendre un plan parfait = rester immobile pendant que les autres avancent imparfaitement mais progressent.",xe:"Waiting for a perfect plan = standing still while others move imperfectly but progress."},
+{qf:"Les 3 ruptures vécues par l'auteur — et la leçon commune ?",qe:"The 3 disruptions experienced by the author — and the common lesson?",of:["Internet, Cloud, IA — la techno gagne toujours","Mobile (SNCF), Social (Milky), Agentique (Adecco) — les organisations qui attendent se font doubler par celles qui avancent imparfaitement","E-commerce, SaaS, IA — le digital gagne","Aucun lien entre les trois"],oe:["Internet, Cloud, AI — tech always wins","Mobile (SNCF), Social (Milky), Agentic (Adecco) — organizations that wait get overtaken by those moving imperfectly","E-commerce, SaaS, AI — digital wins","No link between the three"],c:1,xf:"À chaque rupture, le même pattern : les organisations qui attendent un plan parfait se font doubler par celles qui avancent. Le livre prolonge cette expérience.",xe:"At each disruption, the same pattern: organizations waiting for a perfect plan get overtaken by those moving forward. The book extends this experience."}
+];
+
+// ============================================================
+// LINKEDIN POSTS — pool large, shuffle aléatoire
+// ============================================================
+const LI_POOL=[
+{f:"<strong>Un neurone ne pense pas. Un cerveau, oui.</strong> Une cellule ne vit pas. Un organisme, oui. Un agent transforme. Orchestrez-les — et quelque chose de plus grand émerge.",e:"<strong>A neuron doesn't think. A brain does.</strong> A cell doesn't live. An organism does. An agent transforms. Orchestrate them — and something greater emerges.",u:"https://www.linkedin.com/in/pierrematuchet/recent-activity/all/"},
+{f:"<strong>D'ATLAN à HUANG : des cellules à l'organisme.</strong> Jensen Huang l'a dit à GTC : « L'industrie logicielle va évoluer vers des plateformes agentiques spécialisées. » La course aux modèles est finie. La course à l'orchestration n'a pas commencé.",e:"<strong>From ATLAN to HUANG: cells to organism.</strong> Jensen Huang said it at GTC: 'Enterprise software will evolve into specialized agentic platforms.' The model race is over. The orchestration race hasn't started.",u:"https://www.linkedin.com/pulse/from-atlan-huang-cells-organism-pierre-matuchet-as7qe"},
+{f:"<strong>Les modèles deviennent une commodité.</strong> Le prochain champ de bataille, c'est l'orchestration. Pas gérer chaque agent individuellement — mais gérer la cohérence entre agents. Sans contexte partagé, ce n'est pas de l'automatisation. C'est du chaos à la vitesse machine.",e:"<strong>Models are becoming a commodity.</strong> The next battleground is orchestration. Not managing each agent — but managing coherence between agents. Without shared context, it's not automation. It's chaos at machine speed.",u:"https://www.linkedin.com/pulse/from-atlan-huang-cells-organism-pierre-matuchet-as7qe"},
+{f:"<strong>Gartner prédit que 40% des projets IA agentique seront annulés d'ici 2027.</strong> Pas parce que la technologie échoue — mais parce que les organisations ne sont pas prêtes à opérer des agents à l'échelle. Plateforme, processus, gouvernance : investissez maintenant.",e:"<strong>Gartner predicts 40% of agentic AI projects will be cancelled by 2027.</strong> Not because tech fails — but because organizations aren't ready to operate agents at scale. Platform, process, governance: invest now.",u:"https://www.linkedin.com/pulse/from-atlan-huang-cells-organism-pierre-matuchet-as7qe"},
+{f:"<strong>Scaler la capacité tout en gardant l'humain au cœur.</strong> Chez Adecco, on connecte des millions de personnes. La GenAI c'est passer de la boîte manuelle à l'automatique. L'IA agentique, c'est un copilote intelligent qui prend le volant à côté de vous.",e:"<strong>Scale capacity while keeping humans at the heart.</strong> At Adecco, we connect millions. GenAI was moving from manual to automatic. Agentic AI is an intelligent co-pilot taking the wheel beside you.",u:"https://www.linkedin.com/pulse/how-do-we-scale-capacity-human-centred-work-while-keeping-matuchet-uywbe"},
+{f:"<strong>Règles d'or du déploiement IA :</strong> 1. Réparez avant de scaler. 2. Commencez petit, apprenez vite. 3. Gardez l'humain dans la boucle. 4. Mesurez la confiance, pas la vitesse. 5. Bâtissez sur des fondations solides de données.",e:"<strong>Golden rules for AI deployment:</strong> 1. Fix before you scale. 2. Start small, learn fast. 3. Keep humans in the loop. 4. Measure trust, not speed. 5. Build on strong data foundations.",u:"https://www.linkedin.com/pulse/how-do-we-scale-capacity-human-centred-work-while-keeping-matuchet-uywbe"},
+{f:"<strong>La GenAI nous a donné la vitesse. L'IA agentique nous donne la transformation.</strong> Parce que les meilleurs parcours restent conduits par des humains. La technologie donne la capacité. L'humanité est notre licence d'opérer.",e:"<strong>GenAI gave us speed. Agentic AI gives us transformation.</strong> Because the best journeys are still driven by people. Technology gives capacity. Humanity is our license to operate.",u:"https://www.linkedin.com/pulse/how-do-we-scale-capacity-human-centred-work-while-keeping-matuchet-uywbe"},
+{f:"<strong>Agents autonomes et intelligence globale.</strong> Salesforce à Dreamforce 2024, Microsoft avec Copilot : l'intelligence distribuée inspirée du vivant devient réalité. Comme les colonies de fourmis : des règles simples, un comportement collectif complexe.",e:"<strong>Autonomous agents and global intelligence.</strong> Salesforce at Dreamforce 2024, Microsoft with Copilot: distributed intelligence inspired by biology becomes reality. Like ant colonies: simple rules, complex collective behavior.",u:"https://www.linkedin.com/pulse/agents-autonomes-et-intelligence-globale-une-inspir%C3%A9e-pierre-matuchet-ydgye"},
+{f:"<strong>Centralisation vs décentralisation.</strong> L'IA centralisée = un super-ordinateur. L'IA agentique = des neurones en réseau. Chaque agent agit localement, l'intelligence émerge de la coordination. Flexibilité et résilience accrues.",e:"<strong>Centralization vs decentralization.</strong> Centralized AI = a supercomputer. Agentic AI = networked neurons. Each agent acts locally, intelligence emerges from coordination. Greater flexibility and resilience.",u:"https://www.linkedin.com/pulse/agents-autonomes-et-intelligence-globale-une-inspir%C3%A9e-pierre-matuchet-ydgye"},
+{f:"<strong>La ruée vers l'or et l'IA.</strong> Les fortunes les plus sûres n'ont pas été amassées par les chercheurs d'or, mais par les vendeurs de pioches. NVIDIA = le marchand de pioches de l'ère numérique. L'histoire se répète.",e:"<strong>The gold rush and AI.</strong> The surest fortunes weren't made by gold diggers, but by those selling picks. NVIDIA = the pick seller of the digital era. History repeats itself.",u:"https://www.linkedin.com/pulse/la-ru%C3%A9e-vers-lor-et-lia-les-pioches-chercheurs-dor-pierre-matuchet-7nlse"},
+{f:"<strong>Learning Good from Bad Things.</strong> 80% des données mondiales sont non structurées. L'IA entraînée sur des données biaisées reproduit les biais. Audit, nettoyage, diversification des sources : transformer les mauvaises données en catalyseur de progrès.",e:"<strong>Learning Good from Bad Things.</strong> 80% of global data is unstructured. AI trained on biased data reproduces bias. Audit, cleansing, source diversification: turn bad data into a catalyst for progress.",u:"https://www.linkedin.com/pulse/learning-good-from-bad-things-pierre-matuchet-m20ie"},
+{f:"<strong>8 Mars & IA : bougeons-nous vite.</strong> 22% des professionnels de l'IA sont des femmes. Quand les équipes sont majoritairement masculines, les produits perpétuent les biais. L'IA doit être écrite par tous, pour tous.",e:"<strong>March 8 & AI: let's move fast.</strong> 22% of AI professionals are women. When teams are mostly male, products perpetuate bias. AI must be written by all, for all.",u:"https://www.linkedin.com/pulse/8-mars-ia-bougeons-nous-vite-pour-que-lia-ne-devienne-pierre-matuchet-fp4ke"},
+{f:"<strong>L'IA : repousser les limites ou régler massivement ?</strong> La genAI est à un carrefour stratégique. Résoudre des problèmes extrêmement complexes OU automatiser une multitude de micro-tâches non structurées. La vraie disruption est dans le volume.",e:"<strong>AI: push boundaries or solve at scale?</strong> GenAI is at a strategic crossroads. Solve extremely complex problems OR automate a multitude of unstructured micro-tasks. The real disruption is in volume.",u:"https://www.linkedin.com/pulse/lia-pour-repousser-les-limites-sur-des-sujets-ou-r%C3%A9gler-matuchet-9jl1e"},
+{f:"<strong>L'IA comme le Chemin de Fer.</strong> Les locomotives = les use cases IA. Les voies ferrées = l'infrastructure. Sans rails, une locomotive ne va nulle part. Construisons nos locomotives tout en préparant nos voies ferrées !",e:"<strong>AI like the Railroad.</strong> Locomotives = AI use cases. Railway tracks = infrastructure. Without tracks, a locomotive goes nowhere. Build locomotives while laying the tracks!",u:"https://www.linkedin.com/pulse/lintelligence-artificiellecomme-le-chemin-de-fer-pierre-matuchet-vhdxe"},
+{f:"<strong>Le leadership doit évoluer.</strong> On passe du contrôle à l'orchestration. Guider les résultats au lieu de gérer chaque étape. Mesurer la confiance, pas seulement la vitesse. Les recruteurs deviennent des interprètes — travaillant aux côtés de leurs partenaires digitaux.",e:"<strong>Leadership must evolve.</strong> We move from control to orchestration — guiding outcomes instead of managing every step. Measure trust, not speed. Recruiters become interpreters — working alongside digital partners.",u:"https://www.linkedin.com/pulse/how-do-we-scale-capacity-human-centred-work-while-keeping-matuchet-uywbe"},
+{f:"<strong>Le défi écologique de l'IA.</strong> Les systèmes distribués nécessitent une infrastructure massive. Optimisation énergétique des algorithmes et sources renouvelables : deux impératifs pour une IA durable.",e:"<strong>AI's ecological challenge.</strong> Distributed systems require massive infrastructure. Algorithmic energy optimization and renewable sources: two imperatives for sustainable AI.",u:"https://www.linkedin.com/pulse/agents-autonomes-et-intelligence-globale-une-inspir%C3%A9e-pierre-matuchet-ydgye"},
+{f:"<strong>La Bibliothèque de Babel et l'IA.</strong> Chez Borges, chaque livre contient une vérité partielle. Même logique pour les agents : pris isolément, chacun est limité. C'est leur interaction qui crée l'intelligence collective.",e:"<strong>Borges' Library of Babel and AI.</strong> In Borges, each book holds partial truth. Same logic for agents: individually limited. It's their interaction that creates collective intelligence.",u:"https://www.linkedin.com/pulse/agents-autonomes-et-intelligence-globale-une-inspir%C3%A9e-pierre-matuchet-ydgye"},
+{f:"<strong>La GenAI : un carrefour stratégique.</strong> L'approche opportuniste = construire vite les locomotives. L'approche globale = construire d'abord les voies ferrées. La vérité : il faut faire les deux en parallèle.",e:"<strong>GenAI: a strategic crossroads.</strong> The opportunistic approach = build locomotives fast. The global approach = lay the tracks first. The truth: you need to do both in parallel.",u:"https://www.linkedin.com/pulse/lintelligence-artificiellecomme-le-chemin-de-fer-pierre-matuchet-vhdxe"},
+{f:"<strong>Teleperformance et la disruption GenAI.</strong> La chute des actions de Teleperformance annonce l'impact disruptif de l'IA sur les services. La question : complexité ou volume ? La vraie disruption est dans l'automatisation massive des micro-tâches.",e:"<strong>Teleperformance and GenAI disruption.</strong> Teleperformance's stock drop signals AI's disruptive impact on services. The question: complexity or volume? Real disruption lies in massive micro-task automation.",u:"https://www.linkedin.com/pulse/lia-pour-repousser-les-limites-sur-des-sujets-ou-r%C3%A9gler-matuchet-9jl1e"},
+{f:"<strong>NVIDIA : de GPU à empire agentique.</strong> Sa valeur a grimpé de manière vertigineuse. Pas les chercheurs d'or qui gagnent — les fabricants de pioches. L'intersection technologie + ingéniosité humaine écrira le prochain chapitre.",e:"<strong>NVIDIA: from GPU to agentic empire.</strong> Its value skyrocketed. Not the gold diggers who win — the pick makers. The intersection of technology + human ingenuity will write the next chapter.",u:"https://www.linkedin.com/pulse/la-ru%C3%A9e-vers-lor-et-lia-les-pioches-chercheurs-dor-pierre-matuchet-7nlse"},
+{f:"<strong>Pas loin d'avoir des LLMs patriarcaux.</strong> Quand les équipes sont majoritairement masculines, les produits perpétuent des stéréotypes. La diversité de leadership = 45% de revenus d'innovation vs 26%. Les chiffres parlent.",e:"<strong>Close to having patriarchal LLMs.</strong> When teams are mostly male, products perpetuate stereotypes. Diverse leadership = 45% innovation revenue vs 26%. Numbers speak.",u:"https://www.linkedin.com/pulse/8-mars-ia-bougeons-nous-vite-pour-que-lia-ne-devienne-pierre-matuchet-fp4ke"},
+{f:"<strong>La boucle feedback de l'IA.</strong> Comme un yes-man, l'IA peut renforcer ses erreurs initiales. Dans la justice, ces biais font boule de neige. Audit, transparence, explicabilité : les garde-fous essentiels.",e:"<strong>AI's feedback loop trap.</strong> Like a yes-man, AI can reinforce initial mistakes. In justice, these biases snowball. Audit, transparency, explainability: essential guardrails.",u:"https://www.linkedin.com/pulse/learning-good-from-bad-things-pierre-matuchet-m20ie"},
+{f:"<strong>L'approche opportuniste vs l'approche globale.</strong> Flexibilité et faible risque d'un côté. Transformation profonde et cohérence de l'autre. Le piège : la fragmentation sans vision d'ensemble. Le secret : itérer sur les deux fronts.",e:"<strong>Opportunistic vs global approach.</strong> Flexibility and low risk on one side. Deep transformation and coherence on the other. The trap: fragmentation without vision. The secret: iterate on both fronts.",u:"https://www.linkedin.com/pulse/lintelligence-artificiellecomme-le-chemin-de-fer-pierre-matuchet-vhdxe"},
+{f:"<strong>MCP : 97 millions d'installations.</strong> 5 modèles frontier lancés en 23 jours. Tout GTC focalisé sur les déploiements agentiques en production. Le terrain de bataille a changé : on ne parle plus de benchmarks, mais d'opérations.",e:"<strong>MCP: 97 million installs.</strong> 5 frontier models launched in 23 days. All of GTC focused on agentic deployments in production. The battleground has shifted: not benchmarks anymore, but operations.",u:"https://www.linkedin.com/pulse/from-atlan-huang-cells-organism-pierre-matuchet-as7qe"}
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let cS={};CH.forEach((_,i)=>{cS[i]={q:0,s:0,d:false}});
+let fS={q:0,s:0,d:false};
+
+// ============================================================
+// INIT
+// ============================================================
+function init(){renderBadges();renderQCol();renderLI();fetchNews();renderBookCover();}
+
+// ============================================================
+// BOOK COVER — 4ème de couverture bilingue
+// ============================================================
+function renderBookCover(){
+  const c=document.getElementById('bookCover');
+  if(!c)return;
+  if(L==='fr'){
+    c.innerHTML=`<div><div class="bc-title">Révolution</div><div class="bc-ia">IA</div></div><div class="bc-subtitle">Préparer votre organisation à l'intelligence artificielle et ses agents</div><div class="bc-bottom"><div class="bc-preface">Avec une préface de Denis MACHUEL<br>Directeur Général The Adecco Group</div><div class="bc-author">Pierre MATUCHET</div><div class="bc-edition">Première Edition</div></div>`;
+  } else {
+    c.innerHTML=`<div><div class="bc-ia">AI</div><div class="bc-title">Revolution</div></div><div class="bc-subtitle">Prepare your organization for artificial intelligence and its agents</div><div class="bc-bottom"><div class="bc-preface">Foreword by Denis MACHUEL<br>CEO The Adecco Group</div><div class="bc-author">Pierre MATUCHET</div><div class="bc-edition">First Edition</div></div>`;
+  }
+}
+
+// ============================================================
+// LANG
+// ============================================================
+function setLang(l){
+  L=l;
+  document.querySelectorAll('.lang-b').forEach(b=>b.classList.toggle('on',b.textContent.trim()===l.toUpperCase()));
+  document.querySelectorAll('[data-'+l+']').forEach(e=>{e.innerHTML=e.getAttribute('data-'+l)});
+  renderQCol();renderLI();fetchNews();renderBadges();updProg();renderBookCover();
+}
+
+// ============================================================
+// PROGRESS + BADGES
+// ============================================================
+function updProg(){
+  const d=CH.filter((_,i)=>cS[i].d).length;
+  document.getElementById('pf').style.width=(d/CH.length*100)+'%';
+  document.getElementById('pl').textContent=d+'/'+CH.length;
+  const b=document.querySelector('.ft-btn');
+  if(b){b.disabled=d<CH.length;if(d>=CH.length)b.textContent=L==='fr'?'QUIZ FINAL':'FINAL QUIZ';}
+}
+function renderBadges(){
+  let h='';CH.forEach((_,i)=>{h+=`<div class="bdg ${cS[i].d?'on':''}">${CH[i].n}</div>`;});
+  h+=`<div class="bdg bdg-f ${CH.every((_,i)=>cS[i].d)&&fS.d?'on':''}">★</div>`;
+  document.getElementById('bg').innerHTML=h;
+}
+
+// ============================================================
+// QUIZ COL
+// ============================================================
+function renderQCol(){
+  const c=document.getElementById('qcol');let h='';
+  CH.forEach((ch,i)=>{
+    const s=cS[i];const t=L==='fr'?ch.tf:ch.te;
+    const st=s.d?`${s.s}/${ch.q.length}`:(s.q>0?`${s.q+1}/${ch.q.length}`:`${ch.q.length}q`);
+    h+=`<div class="ch ${s.d?'done':''}" id="c${i}"><div class="ch-row" onclick="tCh(${i})"><div class="ch-n">${ch.n}</div><div class="ch-t">${t}</div><div class="ch-s">${st}</div><div class="ch-ck">${s.d?'✓':''}</div></div><div class="qp" id="p${i}"></div></div>`;
+  });
+  const ad=CH.every((_,i)=>cS[i].d);
+  h+=`<div class="ft"><button class="ft-btn" ${ad?'':'disabled'} onclick="openFQ()">${ad?(L==='fr'?'QUIZ FINAL':'FINAL QUIZ'):(L==='fr'?'QUIZ FINAL':'FINAL QUIZ')}</button><div class="ft-sub">${ad?(L==='fr'?'Badge Architecte Agentique':'Agentic Architect badge'):(L==='fr'?'Complétez les 11 chapitres':'Complete all 11 chapters')}</div></div>`;
+  c.innerHTML=h;
+}
+function tCh(i){const p=document.getElementById('p'+i);const o=p.classList.contains('open');document.querySelectorAll('.qp').forEach(x=>x.classList.remove('open'));if(!o){p.classList.add('open');rQ(i);}}
+function rQ(ci){
+  const ch=CH[ci],s=cS[ci],p=document.getElementById('p'+ci);
+  if(s.d){const m=s.s===ch.q.length?(L==='fr'?'Parfait.':'Perfect.'):(s.s>=3?(L==='fr'?'Bien joué.':'Well played.'):(L==='fr'?'À approfondir.':'Needs review.'));p.innerHTML=`<div class="sc"><div class="sc-n">${s.s}/${ch.q.length}</div><div class="sc-l">${L==='fr'?'CHAPITRE':'CHAPTER'} ${ch.n}</div><div class="sc-m">${m}</div><button class="sc-r" onclick="event.stopPropagation();reCh(${ci})">${L==='fr'?'RECOMMENCER':'RETRY'}</button></div>`;return;}
+  const qi=s.q,q=ch.q[qi],qt=L==='fr'?q.qf:q.qe,opts=L==='fr'?q.of:q.oe,ex=L==='fr'?q.xf:q.xe;
+  let h=`<div class="qc">QUESTION ${qi+1} / ${ch.q.length}</div><div class="qt">${qt}</div><div class="qo" id="o${ci}">`;
+  opts.forEach((o,oi)=>{h+=`<button class="qb" onclick="event.stopPropagation();ans(${ci},${oi})">${o}</button>`;});
+  h+=`</div><div class="qx" id="x${ci}">${ex}</div><button class="qnx" id="nx${ci}" onclick="event.stopPropagation();nxQ(${ci})">${qi<ch.q.length-1?(L==='fr'?'SUIVANTE':'NEXT'):(L==='fr'?'SCORE':'SCORE')}</button>`;
+  p.innerHTML=h;
+}
+function ans(ci,oi){
+  const q=CH[ci].q[cS[ci].q],bs=document.querySelectorAll('#o'+ci+' .qb');
+  bs.forEach((b,i)=>{b.classList.add('lk');if(i===q.c)b.classList.add('sr');});
+  if(oi===q.c){bs[oi].classList.remove('sr');bs[oi].classList.add('ok');cS[ci].s++;}
+  else{bs[oi].classList.add('ko');bs[q.c].classList.remove('sr');bs[q.c].classList.add('ok');}
+  document.getElementById('x'+ci).classList.add('v');document.getElementById('nx'+ci).classList.add('v');
+}
+function nxQ(ci){cS[ci].q++;if(cS[ci].q>=CH[ci].q.length){cS[ci].d=true;renderBadges();updProg();}rQ(ci);renderQCol();setTimeout(()=>{const p=document.getElementById('p'+ci);if(p){p.classList.add('open');rQ(ci);}},10);}
+function reCh(ci){cS[ci]={q:0,s:0,d:false};renderBadges();updProg();renderQCol();setTimeout(()=>{const p=document.getElementById('p'+ci);if(p){p.classList.add('open');rQ(ci);}},10);}
+
+// ============================================================
+// FINAL QUIZ
+// ============================================================
+function openFQ(){fS={q:0,s:0,d:false};document.getElementById('fmod').classList.add('on');rFQ();}
+function closeFQ(){document.getElementById('fmod').classList.remove('on');renderBadges();}
+function rFQ(){
+  const c=document.getElementById('fc');
+  if(fS.d){const m=fS.s===FQ.length?(L==='fr'?'Architecte Agentique. Badge ultime.':'Agentic Architect. Ultimate badge.'):`${fS.s}/${FQ.length}`;c.innerHTML=`<div class="sc"><div style="font-size:44px;margin-bottom:14px;">★</div><div class="sc-n">${fS.s}/${FQ.length}</div><div class="sc-l">QUIZ FINAL</div><div class="sc-m">${m}</div><button class="sc-r" onclick="openFQ()">RETRY</button> <button class="sc-r" onclick="closeFQ()">${L==='fr'?'FERMER':'CLOSE'}</button></div>`;renderBadges();return;}
+  const qi=fS.q,q=FQ[qi],qt=L==='fr'?q.qf:q.qe,opts=L==='fr'?q.of:q.oe,ex=L==='fr'?q.xf:q.xe;
+  let h=`<div class="qc">QUIZ FINAL — ${qi+1}/${FQ.length}</div><div class="qt">${qt}</div><div class="qo" id="fo">`;
+  opts.forEach((o,oi)=>{h+=`<button class="qb" onclick="fAns(${oi})">${o}</button>`;});
+  h+=`</div><div class="qx" id="fx">${ex}</div><button class="qnx" id="fnx" onclick="fNx()">${qi<FQ.length-1?(L==='fr'?'SUIVANTE':'NEXT'):'SCORE'}</button>`;
+  c.innerHTML=h;
+}
+function fAns(oi){const q=FQ[fS.q],bs=document.querySelectorAll('#fo .qb');bs.forEach((b,i)=>{b.classList.add('lk');if(i===q.c)b.classList.add('sr');});if(oi===q.c){bs[oi].classList.remove('sr');bs[oi].classList.add('ok');fS.s++;}else{bs[oi].classList.add('ko');bs[q.c].classList.remove('sr');bs[q.c].classList.add('ok');}document.getElementById('fx').classList.add('v');document.getElementById('fnx').classList.add('v');}
+function fNx(){fS.q++;if(fS.q>=FQ.length)fS.d=true;rFQ();}
+
+// ============================================================
+// LINKEDIN — shuffle aléatoire à chaque chargement
+// ============================================================
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function renderLI(){
+  const tk=document.getElementById('lit');
+  const shuffled=shuffle([...LI_POOL]);
+  const items=[...shuffled,...shuffled]; // duplicate for infinite scroll
+  let h='';
+  items.forEach(p=>{
+    const txt=L==='fr'?p.f:p.e;
+    h+=`<div class="li"><div class="li-h"><div class="li-av">PM</div><div><div class="li-a">Pierre Matuchet</div><div class="li-r">${L==='fr'?'SVP Adecco IT & Digital · Auteur':'SVP Adecco IT & Digital · Author'}</div></div></div><div class="li-b">${txt}</div><div class="li-f"><span class="li-e">LinkedIn</span><a class="li-l" href="${p.u||'https://www.linkedin.com/in/pierrematuchet/'}" target="_blank">${L==='fr'?'LIRE L\'ARTICLE →':'READ ARTICLE →'}</a></div></div>`;
+  });
+  tk.innerHTML=h;
+}
+
+// ============================================================
+// PRESSE — "La Presse en Parle" — vrais articles & interviews
+// ============================================================
+const PRESS_POOL=[
+  {tf:"« L'IA va progressivement agentifier les process RH »",te:"'AI will progressively agentify HR processes'",src:"News Tank RH",tag:"Interview",date:"Jan 2026",url:"https://rh.newstank.fr/article/view/426366/ia-va-progressivement-agentifier-process-rh-pierre-matuchet-the-adecco.html",type:"article"},
+  {tf:"La nécessaire implication des DRH dans l'IA agentique",te:"Why HR Directors must get involved in agentic AI",src:"RH Matin",tag:"Interview",date:"Jan 2026",url:"https://www.rhmatin.com/sirh/core-rh/pierre-matuchet-the-adecco-group-ia-agentique-pourquoi-les-drh-doivent-s-impliquer.html",type:"article"},
+  {tf:"IA agentique : pourquoi les DRH doivent s'impliquer",te:"Agentic AI: why HR must step up",src:"CFE-CGC Adecco",tag:"Relai",date:"Jan 2026",url:"https://www.cfecgc-adecco.com/2026/01/pierre-matuchet-the-adecco-group-ia-agentique-pourquoi-les-drh-doivent-simpliquer.html",type:"article"},
+  {tf:"Révolution IA — Fiche livre Preventica",te:"Révolution IA — Preventica book review",src:"Preventica",tag:"Livre",date:"Jan 2026",url:"https://www.preventica.com/magazine/librairie/revolution-ia-preparer-votre-organisation-a-lintelligence-artificielle-et-ses-agents-22012026",type:"review"},
+  {tf:"Impacts de l'IA en entreprise : du constat au pilotage",te:"AI impacts in business: from assessment to steering",src:"Républik IT",tag:"Tribune",date:"Fév 2026",url:"https://www.republik-it.fr/solutions-techno/data/impacts-de-l-ia-en-entreprise-du-constat-et-de-l-anticipation-au-pilotage.html",type:"article"},
+  {tf:"Comment réussir avec l'IA",te:"How to succeed with AI",src:"Républik IT",tag:"Tribune",date:"2026",url:"https://www.republik-it.fr/solutions-techno/data/comment-reussir-avec-l-ia.html",type:"article"},
+  {tf:"IA : l'utilité et la pertinence au-delà de l'illusion",te:"AI: utility and relevance beyond the hype",src:"Républik IT",tag:"Analyse",date:"2026",url:"https://www.republik-it.fr/solutions-techno/data/ia-l-utilite-et-la-pertinence-au-dela-de-l-illusion-et-de-la-mode.html",type:"article"},
+  {tf:"Révolution IA : ne faites plus d'études traditionnelles",te:"Révolution IA: stop doing traditional studies",src:"Bourse Technique",tag:"Livre",date:"Fév 2026",url:"https://boursetechnique.com/2026/02/03/revolution-ia-ne-faites-plus-detudes-traditionnelles-face-a-lintelligence-artificielle-inevitable/",type:"review"},
+  {tf:"Les solutions IA doivent être intégrées dans les outils RH",te:"AI solutions must be embedded in HR tools",src:"Acteurs Publics",tag:"Vidéo",date:"2025",url:"https://acteurspublics.fr/webtv/emissions/les-rencontres-de-la-relation-citoyen/pierre-matuchet-les-solutions-ia-doivent-etre-integrees-dans-les-outils-de-gestion-des-collaborateurs/",type:"video"},
+  {tf:"Agent IA et RH : Adecco et Salesforce en duo",te:"AI Agent & HR: Adecco and Salesforce teaming up",src:"RH Matin",tag:"Déploiement",date:"2025",url:"https://www.rhmatin.com/recrutement-talents/interim/agent-ia-et-rh-the-adecco-group-et-salesforce-avancent-sur-l-aide-au-recrutement.html",type:"article"},
+  {tf:"Podcast Disruption Inside — Pierre Matuchet",te:"Disruption Inside Podcast — Pierre Matuchet",src:"Disruption Inside",tag:"Podcast",date:"2024",url:"https://podcast.ausha.co/disruption-inside/extrait-pierre-matuchet-directeur-general-transformation-digital-et-candidats-adecco-france",type:"podcast"},
+  {tf:"Le futur de l'intérim passera par l'humain",te:"The future of staffing will be driven by humans",src:"CIO Radio / BtoBRadio",tag:"Radio",date:"2024",url:"https://btobradio.tv/radios/cio-radio-tv/linvite-5/the-adecco-group-le-futur-de-linterim-passera-par-lhumain-pierre-matuchet-directeur-general-sales-marketing-de-the-adecco-group",type:"radio"},
+  {tf:"« Nous considérons l'IA comme un cerveau global »",te:"'We see AI as a global brain to develop'",src:"News Tank RH",tag:"Interview",date:"2024",url:"https://rh.newstank.fr/article/view/318249/considerons-ia-comme-cerveau-global-developper-pierre-matuchet-the-adecco.html",type:"article"},
+  {tf:"IA générative et RH : l'entreprise augmentée — Salesforce World Tour",te:"Generative AI & HR: the augmented enterprise — Salesforce World Tour",src:"RH Matin",tag:"Keynote",date:"2024",url:"https://www.rhmatin.com/sirh/sirh-saas/ia-generative-et-rh-comment-developper-l-entreprise-augmentee.html",type:"article"},
+  {tf:"Adecco multiplie les outils à base d'IA",te:"Adecco multiplies AI-based tools",src:"Info Social RH",tag:"Déploiement",date:"2024",url:"https://www.info-socialrh.fr/fonction-rh/digitale/adecco-multiplie-les-outils-a-base-dia-848374.php",type:"article"}
+];
+
+function fetchNews(){renderPress();}
+
+function renderPress(){
+  const tk=document.getElementById('nwt');
+  const shuffled=shuffle([...PRESS_POOL]);
+  const all=[...shuffled,...shuffled];
+  let h='';
+  const typeIcons={article:'📰',video:'🎬',podcast:'🎙️',radio:'📻',review:'📖',keynote:'🎤'};
+  all.forEach(p=>{
+    const title=L==='fr'?p.tf:p.te;
+    const icon=typeIcons[p.type]||'📰';
+    h+=`<div class="nw"><div class="nw-m"><span class="nw-d">${p.date}</span><span class="nw-tg">${p.tag}</span></div><div class="nw-t"><a href="${p.url}" target="_blank" rel="noopener">${icon} ${title}</a></div><div class="nw-s">${p.src}</div></div>`;
+  });
+  tk.innerHTML=h;
+}
+
+// ============================================================
+init();
+</script>
+</body>
+</html>
