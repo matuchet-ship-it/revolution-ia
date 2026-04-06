@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Révolution IA — Pierre Matuchet</title>
 
-<!-- Google Analytics 4 — remplace G-XXXXXXXXXX par ton Measurement ID -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<!-- Google Analytics 4 — remplace G-LNSSVKGGJR par ton Measurement ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LNSSVKGGJR"></script>
 <script>
   window.dataLayer=window.dataLayer||[];
   function gtag(){dataLayer.push(arguments);}
   gtag('js',new Date());
-  gtag('config','G-XXXXXXXXXX');
+  gtag('config','G-LNSSVKGGJR');
 
   // Track click on "Commander sur Amazon"
   function trackAmazon(){
@@ -48,7 +48,7 @@
   .hero-label { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: var(--g400); margin-bottom: 8px; font-weight: 600; }
   .hero-title { font-family: 'Anton', sans-serif; font-size: clamp(38px, 5vw, 64px); font-weight: 400; line-height: 1; margin-bottom: 8px; letter-spacing: 2px; text-transform: uppercase; }
   .hero-sub { font-size: 12px; color: var(--g400); max-width: 460px; line-height: 1.5; margin-bottom: 14px; font-weight: 300; }
-  .hero-cta { display: inline-flex; align-items: center; gap: 8px; padding: 9px 22px; background: var(--white); color: var(--black); text-decoration: none; font-weight: 600; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; transition: all 0.3s; }
+  .hero-cta { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 9px 22px; background: var(--white); color: var(--black); text-decoration: none; font-weight: 600; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; transition: all 0.3s; min-width: 220px; }
   .hero-cta:hover { background: var(--g200); transform: translateY(-1px); }
   .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
   .hero-cta-li { background: transparent; border: 1px solid var(--g500); color: var(--white); display: inline-flex; align-items: center; gap: 6px; }
@@ -216,7 +216,7 @@
       <h1 class="hero-title" data-fr="IA Révolution" data-en="AI Revolution">IA Révolution</h1>
       <p class="hero-sub" data-fr="Préparer votre organisation à l'intelligence artificielle et ses agents. Une boussole, pas un GPS." data-en="Prepare your organization for AI and its agents. A compass, not a GPS.">Préparer votre organisation à l'intelligence artificielle et ses agents. Une boussole, pas un GPS.</p>
       <div class="hero-actions">
-        <a class="hero-cta" href="https://amzn.eu/d/0g9mb4Wt" target="_blank" onclick="trackAmazon()" data-fr="Commander sur Amazon →" data-en="Order on Amazon →">Commander sur Amazon →</a>
+        <a class="hero-cta" id="amazonCta" href="https://amzn.eu/d/0g9mb4Wt" target="_blank" onclick="trackAmazon()" data-fr="Commander sur Amazon →" data-en="Order on Amazon →" data-href-fr="https://amzn.eu/d/0g9mb4Wt" data-href-en="https://amzn.eu/d/09s6GXSc">Commander sur Amazon →</a>
         <a class="hero-cta hero-cta-li" href="https://www.linkedin.com/in/pierrematuchet/" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> <span data-fr="Me retrouver sur LinkedIn" data-en="Find me on LinkedIn">Me retrouver sur LinkedIn</span></a>
         <a class="hero-cta hero-cta-mail" href="mailto:matuchet@gmail.com" data-fr="Me contacter" data-en="Contact me">Me contacter</a>
       </div>
@@ -280,7 +280,7 @@
 </footer>
 
 <script>
-let L='fr';
+let L=navigator.language&&navigator.language.startsWith('fr')?'fr':'en';
 
 // ============================================================
 // QUIZ DATA — questions de fond, scénarios, réflexion stratégique
@@ -431,9 +431,10 @@ function renderBookCover(){
 // LANG
 // ============================================================
 function setLang(l){
-  L=l;
+  L=l;document.documentElement.lang=l;
   document.querySelectorAll('.lang-b').forEach(b=>b.classList.toggle('on',b.textContent.trim()===l.toUpperCase()));
   document.querySelectorAll('[data-'+l+']').forEach(e=>{e.innerHTML=e.getAttribute('data-'+l)});
+  var ac=document.getElementById('amazonCta');if(ac&&ac.getAttribute('data-href-'+l))ac.href=ac.getAttribute('data-href-'+l);
   renderQCol();renderLI();fetchNews();renderBadges();updProg();renderBookCover();
 }
 
@@ -559,7 +560,7 @@ function renderPress(){
 }
 
 // ============================================================
-init();
+setLang(L);
 </script>
 </body>
 </html>
