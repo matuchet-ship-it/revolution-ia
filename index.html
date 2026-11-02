@@ -161,6 +161,7 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 .tool .dl a.main{background:var(--ink); color:var(--paper)}
 .tool.book{background:var(--ink); color:var(--paper)}
 .tool.book p,.tool.book .kicker{color:var(--paper); opacity:.8}
+.tool.book .dl a{white-space:nowrap; letter-spacing:.04em}
 .tool.book .dl a.main{background:var(--red); border-color:var(--red); color:var(--red-ink)}
 .tool.book .dl a.main:hover{background:var(--paper); border-color:var(--paper); color:var(--ink)}
 .tool .dl a.main:hover{background:var(--red); border-color:var(--red); color:var(--red-ink)}
@@ -169,7 +170,7 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 .author{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.4fr); gap:clamp(28px, 5vw, 72px)}
 .author .name{font-family:var(--display); font-size:clamp(2.2rem, 5vw, 3.6rem); line-height:.95}
 .author .role{margin-top:14px; color:var(--ink-2)}
-.ruptures{display:grid; gap:0; margin-top:4px}
+.ruptures{display:grid; gap:0; margin-top:4px; align-content:start}
 .rupture{display:grid; grid-template-columns:8.5rem minmax(0,1fr); gap:14px; padding:16px 0; border-top:1px solid var(--line)}
 .rupture b{font-family:var(--display); font-weight:400}
 .links{display:flex; flex-wrap:wrap; gap:10px; margin-top:22px}
@@ -178,8 +179,16 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 @media (max-width:760px){.author{grid-template-columns:1fr}.rupture{grid-template-columns:1fr; gap:4px}}
 
 /* linkedin + press */
-.posts{display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:16px}
-.posts iframe{width:100%; min-height:560px; border:1px solid var(--line); background:#fff}
+.posts{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:14px; margin-bottom:20px}
+.post{display:flex; flex-direction:column; gap:10px; padding:20px; border:1.5px solid var(--ink); background:var(--paper); text-decoration:none; color:var(--ink); transition:transform .15s ease}
+.post:hover{transform:translateY(-2px); border-color:var(--red)}
+.post .d{font-weight:600; font-size:.75rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-2); font-variant-numeric:tabular-nums}
+.post h3{font-size:1.12rem; line-height:1.15}
+.post p{font-size:.95rem; color:var(--ink-2); flex:1}
+.post .go{font-weight:600; font-size:.88rem; color:var(--red)}
+@media (max-width:900px){.posts{grid-template-columns:repeat(2, minmax(0,1fr))}}
+@media (max-width:560px){.posts{grid-template-columns:1fr}}
+.portrait{display:block; width:min(220px, 60%); height:auto; aspect-ratio:1; object-fit:cover; margin:14px 0 18px; filter:grayscale(.15) contrast(1.02); box-shadow:10px 10px 0 var(--red)}
 .follow{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:16px; padding:24px; background:var(--paper-2)}
 .follow p{max-width:60ch}
 .press{list-style:none; margin:0; padding:0}
@@ -354,9 +363,10 @@ footer a{color:var(--ink)}
     <div class="wrap author">
       <div>
         <span class="kicker" data-l="fr">L’auteur</span><span class="kicker" data-l="en">The author</span>
-        <p class="name" style="margin-top:12px">Pierre<br>Matuchet</p>
-        <p class="role" data-l="fr">Dirigeant au Groupe Adecco, ingénieur de l’École Centrale Paris. « Je ne suis ni chercheur ni consultant. Je suis un dirigeant qui a vécu plusieurs ruptures de l’intérieur. »</p>
-        <p class="role" data-l="en">Senior executive at The Adecco Group, engineer from École Centrale Paris. “I am neither a researcher nor a consultant. I am an executive who has lived through several disruptions from the inside.”</p>
+        <img class="portrait" src="img/pierre-matuchet.jpg" width="600" height="600" alt="Pierre Matuchet">
+        <p class="name">Pierre<br>Matuchet</p>
+        <p class="role" data-l="fr">SVP IT &amp; Transformation digitale d’Adecco, membre du comité exécutif d’Adecco, ingénieur de l’École Centrale Paris. « Je ne suis ni chercheur ni consultant. Je suis un dirigeant qui a vécu plusieurs ruptures de l’intérieur. »</p>
+        <p class="role" data-l="en">SVP IT &amp; Digital Transformation at Adecco and member of the Adecco Executive Committee, engineer from École Centrale Paris. “I am neither a researcher nor a consultant. I am an executive who has lived through several disruptions from the inside.”</p>
         <div class="links">
           <a class="chip" href="https://www.linkedin.com/in/pierrematuchet/" target="_blank" rel="noopener">LinkedIn →</a>
           <a class="chip" href="#boucle"><span data-l="fr">Écrire à l’auteur</span><span data-l="en">Write to the author</span></a>
@@ -376,7 +386,7 @@ footer a{color:var(--ink)}
     <div class="wrap">
       <div class="sec-head">
         <h2><span data-l="fr">Sur LinkedIn</span><span data-l="en">On LinkedIn</span><span class="sq"></span></h2>
-        <span class="kicker" data-l="fr">Un post par idée clé</span><span class="kicker" data-l="en">One post per key idea</span>
+        <span class="kicker" data-l="fr">Plus de 14 000 abonnés</span><span class="kicker" data-l="en">14,000+ followers</span>
       </div>
       <div class="posts" id="posts"></div>
       <div class="follow" id="follow">
@@ -445,11 +455,23 @@ footer a{color:var(--ink)}
 
 <script>
 /* ---------- À compléter au fil de la campagne ----------
-   POSTS : coller l’URL d’intégration de chaque post LinkedIn
-   (menu « … » du post > Intégrer ce post > copier l’adresse src de l’iframe),
-   ex. "https://www.linkedin.com/embed/feed/update/urn:li:share:7392…"
+   POSTS : un post LinkedIn par ligne, le plus récent en premier
+   (id = le numéro de l’URL du post, urn:li:activity:…).
    PRESS : ajouter les retombées, la plus récente en premier. */
-const POSTS = [];
+const POSTS = [
+  {id:"7521080884024754176", date:"28/10/2026", title:"30 months. That is all it took.",
+   text:"Ethan Mollick published Co-Intelligence in early 2024. This week he published its sequel and charted what happened in between. 30 months. Less than one strategic planning cycle."},
+  {id:"7518180675456307200", date:"20/10/2026", title:"The disruptor hung its own portrait in the hallway.",
+   text:"Dorian Gray stays young in public while his portrait records what is really happening to him. Most companies run AI the same way. Anthropic just brought the portrait down."},
+  {id:"7510574019687981056", date:"29/09/2026", title:"OpenAI just cancelled the October AI launch of the year.",
+   text:"It wasn’t performance. It wasn’t cost. GPT-6.1 Astra was pulled because, in testing, the model used tools it wasn’t authorized to use."},
+  {id:"7507010734782914560", date:"19/09/2026", title:"3 takeaways from Dreamforce 26",
+   text:"The surface replaces the screen. For twenty years the fight was over who built the best screen. That fight is over."},
+  {id:"7505988767519006721", date:"16/09/2026", title:"Day 1 at Dreamforce ’26",
+   text:"“In AI transformation, humans cannot be an afterthought.” Agents will do the work. That part is settled."},
+  {id:"7505677105054228481", date:"15/09/2026", title:"Rolling out Coworker in 40 countries",
+   text:"After a summer pilot in France and the UK, we’re rolling out Coworker in 40 countries. Two months ago I wrote that SaaS had lost its screen."}
+];
 const PRESS = [
   {src:"RH Matin", date:"15/01/2026", url:"https://www.rhmatin.com/sirh/core-rh/pierre-matuchet-the-adecco-group-ia-agentique-pourquoi-les-drh-doivent-s-impliquer.html",
    fr:"Interview : la nécessaire implication des DRH dans l’IA agentique", en:"Interview: why HR leaders must get involved in agentic AI (in French)"}
@@ -548,12 +570,13 @@ document.getElementById("tools").innerHTML = TOOLS.map(t=>`
       <a href="${TOOL_BASE+t[7]}" target="_blank" rel="noopener" class="en-first">PDF · EN</a>
     </div></article>`).join("") + `
   <article class="tool book"><span class="kicker">${dual("Le livre","The book")}</span><h3>${dual("Les 24 chapitres","All 24 chapters")}</h3><p>${dual("Le raisonnement derrière chaque grille, les cas et les sources.","The reasoning behind each grid, with cases and sources.")}</p>
-    <div class="dl"><a class="main" href="https://www.amazon.fr/dp/B0HPXVT32X" target="_blank" rel="noopener">Amazon · FR</a><a class="main" href="https://www.amazon.com/dp/B0HPZ4S6YQ" target="_blank" rel="noopener">Amazon · EN</a></div></article>`;
+    <div class="dl"><a class="main" href="https://www.amazon.fr/dp/B0HPXVT32X" target="_blank" rel="noopener">Amazon FR</a><a class="main" href="https://www.amazon.com/dp/B0HPZ4S6YQ" target="_blank" rel="noopener">Amazon EN</a></div></article>`;
 
 const postsEl = document.getElementById("posts");
 if (POSTS.length) {
-  postsEl.innerHTML = POSTS.map(u=>`<iframe src="${esc(u)}" title="Post LinkedIn" loading="lazy"></iframe>`).join("");
-  postsEl.style.marginBottom = "20px";
+  postsEl.innerHTML = POSTS.map(p=>`<a class="post" href="https://www.linkedin.com/feed/update/urn:li:activity:${esc(p.id)}/" target="_blank" rel="noopener">
+    <span class="d">${esc(p.date)}</span><h3>${esc(p.title)}</h3><p>${esc(p.text)}</p>
+    <span class="go">${dual("Lire sur LinkedIn →","Read on LinkedIn →")}</span></a>`).join("");
 } else { postsEl.hidden = true; }
 
 document.getElementById("press").innerHTML = PRESS.map(p=>`
