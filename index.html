@@ -454,6 +454,10 @@ footer a{color:var(--ink)}
     <span>© 2026 Pierre Matuchet · <span data-l="fr">Droits d’auteur reversés aux Restos du Cœur</span><span data-l="en">Royalties donated to Les Restos du Cœur</span></span>
     <span><a href="https://www.amazon.fr/dp/B0HPXVT32X" target="_blank" rel="noopener">amazon.fr</a> · <a href="https://www.amazon.com/dp/B0HPZ4S6YQ" target="_blank" rel="noopener">amazon.com</a> · <a href="https://www.linkedin.com/in/pierrematuchet/" target="_blank" rel="noopener">LinkedIn</a></span>
   </div>
+  <div class="wrap" id="affil" hidden style="margin-top:10px; font-size:.82rem">
+    <span data-l="fr">En tant que Partenaire Amazon, je réalise un bénéfice sur les achats remplissant les conditions requises.</span>
+    <span data-l="en">As an Amazon Associate I earn from qualifying purchases.</span>
+  </div>
 </footer>
 
 <script>
@@ -584,6 +588,19 @@ if (POSTS.length) {
 
 document.getElementById("press").innerHTML = PRESS.map(p=>`
   <li><span class="src">${esc(p.src)}</span><a href="${esc(p.url)}" target="_blank" rel="noopener">${dual(p.fr,p.en)}</a><span class="d">${esc(p.date)}</span></li>`).join("");
+
+
+/* Identifiants Amazon Partenaires / Associates : à renseigner (ex. "revolutionia-21"), puis republier. */
+const AMAZON_TAGS = { "amazon.fr": "revolutionia-21", "amazon.com": "" };
+(function(){
+  let used=false;
+  document.querySelectorAll('a[href*="amazon."]').forEach(a=>{
+    const u=new URL(a.href); const host=u.hostname.replace(/^www\./,"");
+    const tag=AMAZON_TAGS[host]; if(!tag) return;
+    u.searchParams.set("tag",tag); a.href=u.toString(); a.rel="noopener sponsored"; used=true;
+  });
+  if(used) document.getElementById("affil").hidden=false;
+})();
 
 function setLang(l){
   document.documentElement.lang = l;
